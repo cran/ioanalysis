@@ -31,7 +31,6 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
     if(!is.null(ES)){
       region <- unique(ES[, 2])
     }
-    sector <- unique(io$RS_label[, 2]) # Sectors
     RS_label <- io$RS_label                  # Region Sector Label
   } else if(class(io) != "InputOutput") stop('io must be an "InputOuput" object. See ?as.inputoutput')
 
@@ -41,12 +40,17 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
   linkage <- vector("list", R)
   names(linkage) <- region
   link <- NULL
-  ###################
-  ## Single Region ##
-  ###################
+  ##########################
+  ##########################
+  ## Single Region System ##
+  ##########################
+  ##########################
   if(length(unique(region)) == 1 & setequal(region, unique(io$RS_label[, 1]))){
     n <- dim(A)[1]
     one <- rep(1, n)
+    if("all" %in% sectors){
+      sector <- RS_label[, 2]
+    }
     ############
     ## Direct ##
     ############
@@ -79,7 +83,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
       rownames(link.tot) <- sector
       link <- cbind(link, link.tot)
     }
-    linkage <- link
+    linkage[[1]] <- link
   }
   ###########################
   ###########################
@@ -92,13 +96,32 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
     ####################
     if(intra.inter == FALSE){
       n <- dim(A)[1]
-      r <- which(RS_label[, 1] == region[1])
       one <- matrix(rep(1,n))
-      one.r <- matrix(rep(1, length(r)))
       # Deliberately checking types each loop
       # This allows for more logical construction of the linkage matrix
       for(k in 1:length(region)){
         r <- which(RS_label[, 1] == region[k])
+        one.r <- matrix(rep(1, length(r)))
+        ## ------
+        # Checking sectors each time. This allows for multi-regional systems with different sectors
+        ## ----
+        if("all" %in% sectors){
+          sector <- RS_label[r, 2]
+          z <- 1:length(sector)
+        } else if(!"all" %in% sectors & class(sectors) == "character"){
+          z <- which(RS_label[r, 2] %in% sectors)
+          sector <- RS_label[r, 2][z]
+        } else if(class(sectors) == "numeric" | class(sectors) == "integer"){
+          z <- which(1:length(RS_label[r, 2]) %in% sectors)
+          sector <- RS_label[r, 2][z]
+        } else if(!is.null(ES)){
+          z <- which(ES[, 2] %in% region[k])
+          sector <- ES[z, 3]
+          z <- which(RS_label[, 1] %in% region[k] & RS_label[, 2] %in% sector)
+        }
+        else {
+          stop("Unable to assign sectors. Requrie either 'Easy.Select' object, sectors='all', class(sectors)='character', class(sectors)='numeric', or class(sectors)='integer'")
+        }
         ############
         ## Direct ##
         ############
@@ -112,7 +135,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
             BL.dir <- t(  (t(one) %*% A.r)   )
             FL.dir <-     (   Br. %*% one)
           }
-          link.dir <- cbind(BL.dir, FL.dir)
+          link.dir <- cbind(BL.dir[z], FL.dir[z])
           colnames(link.dir) <- c(  paste( "BL.dir", sep = "."),  paste( "FL.dir", sep = "."))
           rownames(link.dir) <- sector
           link <- cbind(link, link.dir)
@@ -130,7 +153,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
             BL.tot <- t(  (t(one) %*% L.r)   )
             FL.tot <-     (   Gr. %*% one)
           }
-          link.tot <- cbind(BL.tot, FL.tot)
+          link.tot <- cbind(BL.tot[z], FL.tot[z])
           colnames(link.tot) <- c(  paste( "BL.tot", sep = "."),  paste( "FL.tot", sep = "."))
           rownames(link.tot) <- sector
           link <- cbind(link, link.tot)
@@ -145,14 +168,32 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
     if(intra.inter == TRUE){
       n <- dim(A)[1]
       i <- 1:n
-      i1 <- which(RS_label[, 1] == region[1])
-      n1 <- length(i1)
-      one.r <- matrix(rep(1, n1))
-      one.s <- matrix(rep(1, n - n1))
       one <- matrix(rep(1,n))
       for(k in 1:length(region)){
         r <- which(RS_label[, 1] == region[k])
+        one.r <- matrix(rep(1, length(r)))
         s <- setdiff(i, r)
+        one.s <- matrix(rep(1, length(s)))
+        ## ------
+        # Checking sectors each time. This allows for multi-regional systems with different sectors
+        ## ----
+        if("all" %in% sectors){
+          sector <- RS_label[r, 2]
+          z <- 1:length(sector)
+        } else if(!"all" %in% sectors & class(sectors) == "character"){
+          z <- which(RS_label[r, 2] %in% sectors)
+          sector <- RS_label[r, 2][z]
+        } else if(class(sectors) == "numeric" | class(sectors) == "integer"){
+          z <- which(1:length(RS_label[r, 2]) %in% sectors)
+          sector <- RS_label[r, 2][z]
+        } else if(!is.null(ES)){
+          z <- which(ES[, 2] %in% region[k])
+          sector <- ES[z, 3]
+          z <- which(RS_label[, 1] %in% region[k] & RS_label[, 2] %in% sector)
+        }
+        else {
+          stop("Unable to assign sectors. Requrie either 'Easy.Select' object, sectors='all', class(sectors)='character', class(sectors)='numeric', or class(sectors)='integer'")
+        }
         ############
         ## Direct ##
         ############
@@ -172,7 +213,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
             BL.intra.dir <- t(  (t(one.r) %*% Arr)   )
             FL.intra.dir <-     (   Brr %*% one.r)
           }
-          link.dir <- cbind(BL.intra.dir, FL.intra.dir)
+          link.dir <- cbind(BL.intra.dir[z], FL.intra.dir[z])
           colnames(link.dir) <- c(  paste( "BL.intra.dir", sep = "."),  paste( "FL.intra.dir", sep = "."))
           rownames(link.dir) <- sector
           link <- cbind(link, link.dir)
@@ -185,7 +226,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
             BL.inter.dir <- t(  (t(one.s) %*% Asr)    )
             FL.inter.dir <-     (   Brs %*% one.s)
           }
-          link.dir <- cbind(BL.inter.dir, FL.inter.dir)
+          link.dir <- cbind(BL.inter.dir[z], FL.inter.dir[z])
           colnames(link.dir) <- c(  paste( "BL.inter.dir", sep = "."),  paste( "FL.inter.dir", sep = "."))
           rownames(link.dir) <- sector
           link <- cbind(link, link.dir)
@@ -197,7 +238,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
             BL.agg.dir <- t(  (t(one) %*% A.r)   )
             FL.agg.dir <-     (   Br. %*% one)
           }
-          link.dir <- cbind(BL.agg.dir, FL.agg.dir)
+          link.dir <- cbind(BL.agg.dir[z], FL.agg.dir[z])
           colnames(link.dir) <- c(  paste( "BL.agg.dir", sep = "."),  paste( "FL.agg.dir", sep = "."))
           rownames(link.dir) <- sector
           link <- cbind(link, link.dir)
@@ -221,7 +262,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
             BL.intra.tot <- t(  (t(one.r) %*% Lrr)   )
             FL.intra.tot <-     (   Grr %*% one.r)
           }
-          link.tot <- cbind(BL.intra.tot, FL.intra.tot)
+          link.tot <- cbind(BL.intra.tot[z], FL.intra.tot[z])
           colnames(link.tot) <- c(  paste( "BL.intra.tot", sep = "."),  paste( "FL.intra.tot", sep = "."))
           rownames(link.tot) <- sector
           link <- cbind(link, link.tot)
@@ -234,7 +275,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
             BL.inter.tot <- t(  (t(one.s) %*% Lsr)    )
             FL.inter.tot <-     (   Grs %*% one.s)
           }
-          link.tot <- cbind(BL.inter.tot, FL.inter.tot)
+          link.tot <- cbind(BL.inter.tot[z], FL.inter.tot[z])
           colnames(link.tot) <- c(  paste( "BL.inter.tot", sep = "."),  paste( "FL.inter.tot", sep = "."))
           rownames(link.tot) <- sector
           link <- cbind(link, link.tot)
@@ -246,7 +287,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
             BL.agg.tot <- t(  (t(one) %*% L.r)   )
             FL.agg.tot <-     (   Gr. %*% one)
           }
-          link.tot <- cbind(BL.agg.tot, FL.agg.tot)
+          link.tot <- cbind(BL.agg.tot[z], FL.agg.tot[z])
           colnames(link.tot) <- c(  paste( "BL.agg.tot", sep = "."),  paste( "FL.agg.tot", sep = "."))
           rownames(link.tot) <- sector
           link <- cbind(link, link.tot)
@@ -256,29 +297,9 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
       }
     }
   }
-  if(!is.null(ES)){
-    if(class(linkage) == "list"){
-      regions <- names(linkage)
-      for(k in 1:length(regions)){
-        i <- which(ES[, 2] == regions[k])
-        sector <- ES[i, 3]
-        j <- which(rownames(linkage[[k]]) %in% sector)
-        linkage[[k]] <- linkage[[k]][j, ]
-      }
-    }
-  } else if(is.null(ES) & !"all" %in% sectors){
-    if(class(sectors) == "numeric" | class(sectors) == "integer"){
-      sectors <- unique(io$RS_label[, 2])[sectors]
-    }
-    regions <- names(linkage)
-    for(k in 1:length(regions)){
-      j <- which(rownames(linkage[[k]]) %in% sectors)
-      linkage[[k]] <- linkage[[k]][j, ]
-    }
-  }
-  if(length(linkage) == 1){
-    linkage <- linkage[[1]]
-  }
+#  if(length(linkage) == 1){
+#    linkage <- linkage[[1]]
+#  }
   linkage
 }
 

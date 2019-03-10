@@ -22,7 +22,7 @@ ras(io, x1, u1, v1, tol, maxiter, type, verbose = FALSE)
 }
 
 \details{Uses the ras iterative technique for updating the matrix of technical input coefficients. This takes the form:
-\deqn{lim_{n \Rightarrow \infty} A^{2n} = lim_{n \Rightarrow \infty} [\hat{R}^n ... \hat{R}^1]A_t[\hat{S}^1 ... \hat{S}^n] = A_{t+1}}
+\deqn{lim_{n \Rightarrow \infty} A^{2n} = lim_{n \Rightarrow \infty} [\hat{R}^n ... \hat{R}^1]A_t[\hat{S}^1 ... \hat{S}^n] = \hat{A}_{t+1}}
 where \eqn{R^1 = diag(u_{t+1}/u_0)}, \eqn{u_0 = A_tX}, and \eqn{u_{t+1} = }\code{u1}. Similarly \eqn{S^1 = diag(v_{t+1}/v_0)}, \eqn{v_0 = XR^1A_t}.
 
 Each iteration calculates the full \eqn{ras} object; that is, 2 steps are caluclated per iteration.

@@ -10,7 +10,7 @@
   See \code{Usage} for details.
 
 
-  Caution: Inverting large matrices will take a long time. R does a computation roughly every 8e-10 second. The number of computations per matrix inversion is n^3 where n is the dimension of the square matrix. For n = 5000 it should take 100 seconds. I trust you know how cubic functions grow.}
+  Caution: Inverting large matrices will take a long time. R does a computation roughly every 8e-10 second. The number of computations per matrix inversion is n^3 where n is the dimension of the square matrix. For n = 5000 it should take 100 seconds.}
 %%%%%%%%%%%
 %% Usage %%
 %%%%%%%%%%%

@@ -28,7 +28,7 @@ where F is the field of influence, k is order of influence, l_{ij} is the ith ro
 \value{Returns a matrix of the Field of Influence
 }
 \references{
-Sonis, Michael & Hewings, Geoffry J.D. (1992), "Coefficient Chang in Input-Output Models: Theory and Applications," Economic Systems Research, 4:2, 143-158 (\url{https://doi.org/10.1080/09535319200000013})
+Sonis, Michael & Hewings, Geoffrey J.D. (1992), "Coefficient Chang in Input-Output Models: Theory and Applications," Economic Systems Research, 4:2, 143-158 (\url{https://doi.org/10.1080/09535319200000013})
 
 Blair, P.D. and Miller, R.E. (2009). "Input-Output Analysis: Foundations and Extensions". Cambridge University Press
 

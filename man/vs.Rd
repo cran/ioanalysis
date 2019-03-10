@@ -7,7 +7,7 @@
 \description{
 Calculates the vertical specialization share of total exports of each sector as described by Hummels et al. (2001), equation 3. Creates a value between zero and one to indicate relative specialization. For each region, a Leontief inverse is calculated. You need a multi-region input-output dataset for \code{vs} to be relevant.
 
-Caution: Inverting large matrices will take a long time. Each individual hypothetical extraction requires the inversion of a matrix. R does a computation roughly every 8e-10 second. The number of computations per matrix inversion is n^3 where n is the dimension of the square matrix. For n = 5000 it should take 100 seconds. I trust you know how cubic functions grow.
+Caution: Inverting large matrices will take a long time. Each individual hypothetical extraction requires the inversion of a matrix. R does a computation roughly every 8e-10 second. The number of computations per matrix inversion is n^3 where n is the dimension of the square matrix. For n = 5000 it should take 100 seconds.
 }
 \usage{
 vs(io, ES, regions = "all", sectors = "all")

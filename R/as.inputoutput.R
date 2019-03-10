@@ -19,6 +19,9 @@ as.inputoutput <- function(Z, RS_label,
   if(dim(RS_label)[2] != 2) stop("RS_label must have the first column of regions and second regions sectors")
   io$RS_label <- as.character(RS_label[, 1])
   io$RS_label <- cbind(io$RS_label, as.character(RS_label[, 2]))
+  
+  # Total Production -- a vector
+  io$X <- matrix(X, ncol = 1)
 
   # Final demand matrix -- could be a matrix or a vector
   if(!missing(f)){
@@ -41,7 +44,7 @@ as.inputoutput <- function(Z, RS_label,
   } else if(missing(f)){
     cat("\n  Final Demand matrix (f) was not provided. Calculating aggregate Final Demand... \n\n")
     one <- matrix(rep(1,n))
-    io$f <- X - io$Z %*% one
+    io$f <- io$X - io$Z %*% one
     io$f_label <- matrix(c("aggregate", "aggregate"))
   }
 
@@ -64,9 +67,6 @@ as.inputoutput <- function(Z, RS_label,
       io$E_label <- E_label
     }
   }
-
-  # Total Production -- a vector
-  io$X <- matrix(X, ncol = 1)
 
   # Value added -- could be a matrix or a vector
   if(!missing(V)){
@@ -98,14 +98,15 @@ as.inputoutput <- function(Z, RS_label,
     } else {
       if(dim(M)[2] != length(X)) stop("Column dimension of M and Z must match")
       io$M <- as.matrix(M)
+      check <- 1
     }
     # Import label
     if(check == 1){
       if( !missing("M_label")){
         if( is.null(dim(M_label)) ){
           if( length(M_label) != dim(io$M)[1]) stop("Row dimension of M and M_label must match")
-          io$M_label <- matrix(M_label, nrow = 1)
         }
+        io$M_label <- matrix(M_label, nrow = 1)
       }
     } else {
     if( !missing("M_label")){
@@ -123,7 +124,7 @@ as.inputoutput <- function(Z, RS_label,
   # Creating the fV matrix
   if(!missing(fV)){
     if(dim(fV)[2] != dim(f)[2]) stop("The number of columns of fV must match f. It's fine to have NAs in fV")
-    io$fV <- fV
+    io$fV <- as.matrix(fV)
     if(missing(fV_label)) stop("If the fV matrix is provided, there must be an fV_label")
     if(dim(fV)[1] != length(fV_label)) stop("The number of rows of fV and fV_label must match")
     io$fV_label <- matrix(fV_label)
@@ -140,6 +141,7 @@ as.inputoutput <- function(Z, RS_label,
   } else {
     io$A <- A
   }
+  io$A <- as.matrix(io$A)
 
   # Technical Output Coefficient Matrix
   if(missing(B)){
@@ -149,6 +151,7 @@ as.inputoutput <- function(Z, RS_label,
   } else {
     io$B <- B
   }
+  io$B <- as.matrix(io$B)
 
   # Creating the Leontief inverse
   if(missing(L)){

@@ -7,7 +7,7 @@ Computes the Leontief (input) inverse. \code{leontief.inv} has inputs to invert 
 
 Note: if you have a non \code{InputOutput} object and you wish to use only a subset of all regions, you must supply the intermediate transaction matrix (\code{Z}) and total production matrix (\code{X}). Otherwise use \code{L <- Z \%*\% diag(c(1/X))}
 
-  Caution: Inverting large matrices will take a long time. R does a computation roughly every 8e-10 second. The number of computations per matrix inversion is n^3 where n is the dimension of the square matrix. For n = 5000 it should take 100 seconds. I trust you know how cubic functions grow.}
+  Caution: Inverting large matrices will take a long time. R does a computation roughly every 8e-10 second. The number of computations per matrix inversion is n^3 where n is the dimension of the square matrix. For n = 5000 it should take 100 seconds.}
 
 \usage{
 leontief.inv(Z = NULL, X, A, RS_label, regions)

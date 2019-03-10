@@ -5,7 +5,7 @@
 \description{
 Computes the Ghoshian (ouput) inverse. \code{ghosh.inv} has inputs to invert a subset of all regions if desired. If not using an \code{InputOutput} object from \code{\link{as.inputoutput}}, the functionality is limited. See example for more details.
 
-  Caution: Inverting large matrices will take a long time. R does a computation roughly every 8e-10 second. The number of computations per matrix inversion is n^3 where n is the dimension of the square matrix. For n = 5000 it should take 100 seconds. I trust you know how cubic functions grow.}
+  Caution: Inverting large matrices will take a long time. R does a computation roughly every 8e-10 second. The number of computations per matrix inversion is n^3 where n is the dimension of the square matrix. For n = 5000 it should take 100 seconds. }
 
 \usage{
 ghosh.inv(Z = NULL, X, B, RS_label, regions)

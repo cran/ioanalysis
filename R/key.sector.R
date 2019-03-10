@@ -2,7 +2,7 @@ key.sector <- function(io, ES = NULL, crit = 1, regions = "all", sectors = "all"
   # using the linkages function to grab a table of linkages
   type <- sort(type) # Making sure they output the same
   link <- linkages(io, ES = ES, regions = regions, sectors = sectors, type = type, normalize = FALSE, intra.inter = intra.inter)
-  link <- as.matrix(link)
+  #link <- as.matrix(link)
   # Some preliminaries for constructing the output matrix
   keys <- NULL
   RS_label <- io$RS_label                       # Region sector label
@@ -12,6 +12,9 @@ key.sector <- function(io, ES = NULL, crit = 1, regions = "all", sectors = "all"
     region <- regions
   } else if(class(regions) == "numeric" | class(regions) == "integer"){
     region <- unique(io$RS_label[, 1])[regions]
+  }
+  if(!is.null(ES)){
+    region <- unique(ES[, 2])
   }
   # Creating an object to store the results
   R <- length(region)
@@ -30,6 +33,7 @@ key.sector <- function(io, ES = NULL, crit = 1, regions = "all", sectors = "all"
         FL <- BL + 1
         hold <- data.frame(temp[, BL], temp[, FL], Key)
         colnames(hold) <- c(colnames(temp)[c(BL,FL)], paste("key", substring(type[t], 1, 3), sep = ".") )
+        rownames(hold) <- rownames(temp)
         for(j in 1:n){
           if(hold[j, 1] <  crit & hold[j, 2] <  crit){hold[j,3] <- "I"}
           if(hold[j, 1] <  crit & hold[j, 2] >= crit){hold[j,3] <- "II"}
@@ -61,6 +65,7 @@ key.sector <- function(io, ES = NULL, crit = 1, regions = "all", sectors = "all"
           counter <- counter + 1
           hold <- data.frame(temp[, BL], temp[, FL], Key)
           colnames(hold) <- c(colnames(temp)[c(BL,FL)], paste("key", int[i], substring(type[t], 1, 3), sep = ".") )
+          rownames(hold) <- rownames(temp)
           for(j in 1:n){
             if(hold[j, 1] <  crit & hold[j, 2] <  crit){hold[j,3] <- "I"}
             if(hold[j, 1] <  crit & hold[j, 2] >= crit){hold[j,3] <- "II"}
@@ -73,13 +78,14 @@ key.sector <- function(io, ES = NULL, crit = 1, regions = "all", sectors = "all"
           else if(counter > 1){
             holder <- data.frame(holder, hold)
           }
+          
         }
       }
       key[[r]] <- data.frame(holder)
     }
   }
-  if(length(region) == 1){
-    key <- key[[1]]
-  }
+#  if(length(region) == 1){
+#    key <- key[[1]]
+#  }
   key
 }

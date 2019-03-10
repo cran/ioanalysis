@@ -4,7 +4,7 @@
 \title{Aggregate Sectors}
 \description{\code{agg.sector} takes specified sectors and creates a "new" joint sector. This produces a new \code{InputOutput} object. Note the Leontief Inverse and Ghoshian Inverse are elements. There is deliberately no warning if the sector does not occur in all regions. See \code{\link{locate.mismatch}}.
 
-Caution: Inverting large matrices will take a long time. R does a computation roughly every 8e-10 second. The number of computations per matrix inversion is n^3 where n is the dimension of the square matrix. For n = 5000 it should take 100 seconds. I trust you know how cubic functions grow.}
+Caution: Inverting large matrices will take a long time. R does a computation roughly every 8e-10 second. The number of computations per matrix inversion is n^3 where n is the dimension of the square matrix. For n = 5000 it should take 100 seconds.}
 \usage{
 agg.sector(io, sectors, newname = "newname")
 }

@@ -3,6 +3,29 @@ easy.select <- function(io){
   RS_label <- io$RS_label
   selection <- NULL
   continueSelect <- 0
+  
+  quiet <- function(x) { 
+    sink(tempfile()) 
+    on.exit(sink()) 
+    invisible(force(x)) 
+  } 
+  
+  mm <- quiet(locate.mismatch(io))
+  if(length(mm) > 0){
+    cat("\nThis is an unbalanced Input-Output system.")
+    cat("\nWould you like to see mismatched?")
+    userInput <- readline(prompt = "y/n: ")
+    if(userInput == "y"){
+      n <- length(mm)
+      for(i in 1:n){
+        cat(paste("\nSector ", RS_label[mm[[i]][[1]], 2], 
+                  " is in region(s) ", mm[[i]][[2]], 
+                  " and not in region(s) ", mm[[i]][[3]], sep = ""))
+      }
+      cat("\n")
+    }
+  }
+  
   while(TRUE){
     cat("\nPress Esc to force quit")
     cat("\n\n===================")
@@ -17,9 +40,9 @@ easy.select <- function(io){
     ## Checking for valid input ##
     ##############################
     if(!userInput %in% c("s","l","v","r","e")){cat("Select option from main menu")}
-    ###############
+    ########################
     ## Save and Exit Loop ##
-    ###############
+    ########################
     if(userInput == "e"){break}
     ####################
     ## Keyword Search ##
@@ -193,7 +216,7 @@ easy.select <- function(io){
                 cat(paste("\n", sectorCodes, sectors, sep = ""))
                 regions <- unique(RS_label[, 1])
                 if(length(regions) > 1){
-                  RS <- RS[RS[, 2] %in% sectors, ]
+                  RS <- RS_label[RS_label[, 2] %in% sectors, ]
                   for(s in 1:length(sectors)){
                     for(r in 1:length(regions)){
                       if(length(which(RS[, 1] %in% regions[r] & RS[, 2] %in% sectors[s])) == 0){
