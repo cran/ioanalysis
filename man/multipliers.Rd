@@ -15,7 +15,7 @@ multipliers(io, ES, regions = "all", sectors = "all", multipliers, wage.row,
   \item{ES}{An \code{EasySelect} class object from \code{\link{easy.select}} to specify which region and sector combinations to use.}
   \item{regions}{Character or Integer. Specific regions to be used. Can either be a character that exactly matches the name of the region in \code{RS_label} or the number of the region in the order it appears in \code{RS_label}.}
   \item{sectors}{Character or Integer. Specific sectors to be used. Can either be a character that exactly matches the name of the sector in \code{RS_label} or the number of the sector in the order it \code{RS_label}.}
-  \item{multipliers}{Character. Any combination of the following: \code{output}, \code{input}, \code{income}, and/or \code{employment}}
+  \item{multipliers}{Character. Any combination of the following: \code{output}, \code{input}, \code{wage}, and/or \code{employment}}
   \item{wage.row}{Integer. The row(s) in Value Added where wages is stored. See \code{io$V_label} if you do not know. This is not to be confused with the labor located in the intermediate transaction matrix (\code{Z})}
   \item{employ.closed.row}{Integer. The row(s) in the intermediate transaction matrix (\code{Z}) where labor is stored. This is not to be confused with "wages" or "employee compensation" etc.}
   \item{employ.physical.row}{character or Integer. The row(s) in the phtsical matrix (\code{P}) where labor is stored. This is not to be confused with "wages" or "employee compensation" etc.}
@@ -32,7 +32,7 @@ where \eqn{l_{ij}} is the ith row and jth column element of the Leontief matrix.
 \deqn{I_j = \sum_{i=1}^n g_{ij}}
 where \eqn{g_ij} is the ith row and jth column element of the Ghoshian matrix
 
-(3) \code{income} - Income multipliers are calculated using value add due to employee compensation or wages. Multiple types of wages are supported. Wages are standardized and multiplied by the Leontief matrix:
+(3) \code{wage} - Income multipliers are calculated using value add due to employee compensation or wages. Multiple types of wages are supported. Wages are standardized and multiplied by the Leontief matrix:
 \deqn{W_j = \sum_{i=1}^n \omega _i l_{ij} }
 where \eqn{\omega _i = w_i/X_i} is the wage divided by the total production for that region-sector combination, and \eqn{l_{ij}} is the ith row and jth column element of the Leontief matrix.
 
@@ -61,7 +61,7 @@ John J. P. Wade, Ignacio Sarmiento-Barbieri
 \examples{
 data(toy.IO)
 class(toy.IO)
-M1 <- multipliers(toy.IO, multipliers = "income", wage.row = 1)
+M1 <- multipliers(toy.IO, multipliers = "wage", wage.row = 1)
 M2 <- multipliers(toy.IO, multipliers = "employment.closed", employ.closed.row = "Minions")
 
 data(toy.ES)

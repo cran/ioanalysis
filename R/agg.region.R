@@ -6,9 +6,9 @@ agg.region <- function(io, regions, newname = "newname"){
   RS_label <- io$RS_label
   f_label <- io$f_label
   # Checking to see if the final demand is aggregated
-  check <- 0
-  if(dim(f_label)[2] == 1){
-    check <- 1
+  check <- 0         # NOT aggregated
+  if(length(unique(f_label[1,])) == 1){
+    check <- 1       # IS aggregated
   }
   # Checking for valid regions
   if(class(regions) == "factor"){
@@ -41,12 +41,38 @@ agg.region <- function(io, regions, newname = "newname"){
   }
   # Adjusting the labels
   RS_label[which(RS_label[,1] %in% regions[1]), 1] <- newname
-  if(check == 0){
+  if(check == 0){ # f_label
+    m = dim(f_label)[2]
+    I.f = diag(m)
+    j = which(f_label[1, ] == regions[1])
+    R = length(regions)
+    for(r in 2:R){
+      k = which(f_label[1,] == regions[r])
+      I.f[, j] = I.f[, j] + I.f[, k]
+    }
+    k = which(f_label[1,] %in% regions[-1])
+    I.f = I.f[, -k]
+    io$f <- io$f %*% I.f
     f_label[1, which(f_label[1,] %in% regions[1])] <- newname
   }
-  if(!is.null(io$E)){
+  if('E' %in% names(io)){ # E_label
     E_label <- io$E_label
-    E_label[1, which(E_label[1,] %in% regions[1])] <- newname
+    if(length(unique(E_label[1,])) > 1){
+      m = dim(E_label)[2]
+      I.E = diag(m)
+      j = which(E_label[1, ] == regions[1])
+      R = length(regions)
+      for(r in 2:R){
+        k = which(E_label[1,] == regions[r])
+        I.E[, j] = I.E[, j] + I.E[, k]
+      }
+      k = which(E_label[1, ] %in% regions[-1])
+      I.E = I.E[, -k]
+      io$E = io$E %*% I.E
+      E_label[1, which(E_label[1,] %in% regions[1])] <- newname
+      i = which(E_label[1, ] %in% regions[-1])
+      E_label = E_label[, -i]
+    }
   }
   regions <- regions[-1]
   i <- which(RS_label[, 1] %in% regions)
@@ -56,10 +82,7 @@ agg.region <- function(io, regions, newname = "newname"){
     i <- which(f_label[1, ] %in% regions)
     f_label <- f_label[, -i]
   }
-  if(!is.null(io$E)){
-    i <- which(E_label[1, ] %in% regions)
-    E_label <- matrix(E_label[, -i], nrow = 2)
-  }
+  
   ######################################
   ## creating a new InputOuput object ##
   ######################################
@@ -70,34 +93,28 @@ agg.region <- function(io, regions, newname = "newname"){
   IO <- NULL
   IO$Z <- S %*% io$Z %*% t(S)
   IO$RS_label <- RS_label
-  if(check == 0){
-    IO$f <- S %*% io$f
-    IO$f_label <- f_label
-  } else if(check == 1){
-    IO$f <- io$f
-    IO$f <- io$f_label
-  }
-  if(!is.null(io$E)){
+  IO$f <- S %*% io$f
+  IO$f_label <- matrix(f_label, nrow = 2)
+  if('E' %in% names(io)){
     IO$E <- S %*% io$E
-    IO$E_label <- E_label
+    IO$E_label <- matrix(E_label, nrow = 2)
   }
   IO$X <- S %*% io$X
   if(!is.null(io$V)){
     IO$V <- io$V %*% t(S)
     IO$V_label <- io$V_label
   }
-  if(exists("io$M")){
+  if('M' %in% names(io)){
     IO$M <- io$M %*% t(S)
     IO$M_label <- io$M_label
   }
-  if(!is.null(io$fV)){
-    IO$fV <- io$fV
+  if('fV' %in% names(io)){
+    IO$fV <- io$fV %*% I.f
     IO$fV_label <- io$fV_label
   }
-  xhat <- matrix(1/IO$X, ncol = n, nrow = n)
-  IO$A <- IO$Z * xhat
-  xhat <- matrix(1/IO$X, ncol = n, nrow = n, byrow = TRUE)
-  IO$B <- IO$Z * xhat
+  xhat <- diag(c(1/IO$X))
+  IO$A <- IO$Z %*% xhat
+  IO$B <- xhat %*% IO$Z
   IO$L <- leontief.inv(A = IO$A)
   IO$G <- ghosh.inv(B = IO$B)
   class(IO) <- "InputOutput"

@@ -1,6 +1,6 @@
 Package: ioanalysis
 Title: Input Output Analysis
-Version: 0.1.1
+Version: 0.1.3
 Authors@R: c(
   person("John", "Wade", email = "jjpwade2@illinois.edu", role = c("aut", "cre")),
   person("Ignacio", "Sarmiento-Barbieri", email = "srmntbr2@illinois.edu", role = c("aut"))) 
@@ -14,6 +14,6 @@ URL: http://www.real.illinois.edu
 LazyData: true
 RoxygenNote: 6.0.1
 NeedsCompilation: no
-Packaged: 2019-03-10 20:13:14 UTC; JJPWade
+Packaged: 2019-04-21 21:20:47 UTC; JJPWade
 Repository: CRAN
-Date/Publication: 2019-03-10 20:30:13 UTC
+Date/Publication: 2019-04-21 21:50:21 UTC

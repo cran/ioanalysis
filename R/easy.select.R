@@ -18,7 +18,7 @@ easy.select <- function(io){
     if(userInput == "y"){
       n <- length(mm)
       for(i in 1:n){
-        cat(paste("\nSector ", RS_label[mm[[i]][[1]], 2], 
+        cat(paste("\nSector ", RS_label[mm[[i]][[1]][1], 2], 
                   " is in region(s) ", mm[[i]][[2]], 
                   " and not in region(s) ", mm[[i]][[3]], sep = ""))
       }
@@ -114,8 +114,8 @@ easy.select <- function(io){
                       cat("\n      Matches:\n")
                       cat(paste("\n", sectorCodes, sectors, sep = ""))
                       if(length(region) > 1){
-                        RS <- RS_label[RS_label[, 1] %in% regions, ]
-                        RS <- RS[RS[, 2] %in% sectors, ]
+                        RS <- matrix(RS_label[RS_label[, 1] %in% regions, ], ncol = 2)
+                        RS <- matrix(RS[RS[, 2] %in% sectors, ], ncol = 2)
                         for(s in 1:length(sectors)){
                           for(r in 1:length(regions)){
                             if(length(which(RS[, 1] %in% regions[r] & RS[, 2] %in% sectors[s])) == 0){

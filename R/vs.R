@@ -69,11 +69,12 @@ vs <- function(io, ES, regions = "all", sectors = "all"){
     rownames(vs.r) <- sector
     vs[[r]] <- vs.r
   }
-  if(length(vs) == 1){
-    return(vs[[1]])
-  } else{
-    return(vs)
-  }
+#  if(length(vs) == 1){
+#    return(vs[[1]])
+#  } else{
+#    return(vs)
+#  }
+  vs
 }
 
 

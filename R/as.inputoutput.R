@@ -135,9 +135,8 @@ as.inputoutput <- function(Z, RS_label,
   X[i] <- 1
   # Technical input Coefficient Matrix
   if(missing(A)){
-    n <- length(X)
-    xhat <- matrix(1/X, ncol = n, nrow = n)
-    io$A <- Z * xhat
+    xhat <- diag(c(1/X))
+    io$A <- Z %*% xhat
   } else {
     io$A <- A
   }
@@ -145,9 +144,8 @@ as.inputoutput <- function(Z, RS_label,
 
   # Technical Output Coefficient Matrix
   if(missing(B)){
-    n <- length(X)
-    xhat <- matrix(1/X, ncol = n, nrow = n, byrow = TRUE)
-    io$B <- Z * xhat
+    xhat <- diag(c(1/X))
+    io$B <- xhat %*% Z
   } else {
     io$B <- B
   }

@@ -63,7 +63,7 @@ ghosh.inv <- function(Z = NULL, X, B, RS_label, regions){
       if(n > 1500){
         print("Calculating Intermediate Transaction Matrix (A)...")
       }
-      xhat <- matrix(1/X, ncol = n, nrow = n, byrow = TRUE)
+      xhat <- diag(c(1/X))
       B <- Z * xhat
     }
     n <- dim(B)[1]

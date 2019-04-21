@@ -3,6 +3,6 @@ inverse.important <- function(io, i, j, delta.aij){
   if(length(i) != 1) stop("i (row) should only be one number")
   if(length(j) != 1) stop("j (column) should only be one number")
   L <- io$L
-  delta.L <- delta.aij/(1-L[j,i]*delta.aij) * f.influence(deparse(substitute(io)), i, j)
+  delta.L <- delta.aij/(1-L[j,i]*delta.aij) * f.influence(io, i, j)
   delta.L
 }

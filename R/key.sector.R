@@ -87,5 +87,11 @@ key.sector <- function(io, ES = NULL, crit = 1, regions = "all", sectors = "all"
 #  if(length(region) == 1){
 #    key <- key[[1]]
 #  }
+  if(!is.null(ES)){
+    for(r in 1:length(region)){
+      sectors = ES[which(ES[,2] == region[r]), 3]
+      key[[r]] = key[[r]][rownames(key[[r]]) %in% sectors, ]
+    }
+  }
   key
 }

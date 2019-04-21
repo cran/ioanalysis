@@ -4,15 +4,13 @@
 \title{Field of Influence}
 \description{Calculates the field of influence. Can handle first to nth order field of influence. Uses the method as Sonis & Hewings 1992. This is a recursive technique, so computation time depends on the size of the data and order of field of influence.
 
-WARNING: Since this is a recursive function, each recursion saves the object for each recursion. This would make it impossible to run for large datasets, even with only a small order of field of influence. Therefore, it is WILDLY more memory efficient to call the object from the global environment (workspace). Thus, for this function you only input the name of the \code{InputOutput} object, not the object itself.
-
 This function is primarily intended as a helper function for \code{\link{inverse.important}}
 }
 
-\usage{f.influence(ioname, i , j)}
+\usage{f.influence(io, i , j)}
 
 \arguments{
-  \item{ioname}{Character. The name verbatim of your \code{InputOutput} from \code{\link{as.inputoutput}} as saved in your workspace.}
+  \item{io}{An \code{InputOutput} class object from \code{\link{as.inputoutput}}}
   \item{i}{Numeric. The row component(s) of the coefficient(s) of interest}
   \item{j}{Numeric. The column component(S) of the coefficient(s) of interest}
 }
@@ -48,12 +46,12 @@ class(toy.IO)
 # First order field of influence on L[3,2]
 i <- 3
 j <- 2
-f.influence("toy.IO", i, j)
+f.influence(toy.IO, i, j)
 
 # Second order field of influence on L[3,2], L[4,5], L[6, 3], and L[1,10]
 i <- c(3, 4, 6,  1)
 j <- c(2, 5, 3, 10)
-f.influence("toy.IO", i, j)
+f.influence(toy.IO, i, j)
 
 }
 % Add one or more standard keywords, see file 'KEYWORDS' in the

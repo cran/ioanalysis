@@ -1,11 +1,11 @@
 multipliers <- function(io, ES, regions = "all", sectors = "all", multipliers, wage.row, employ.closed.row, employ.physical.row){
   # Preliminaries
   if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
-  if(missing(multipliers)) stop('Please specify multipliers = . Options are: output, input, income, and/or employment')
+  if(missing(multipliers)) stop('Please specify multipliers = . Options are: output, input, wage, and/or employment')
   multipliers <- unique(multipliers)
   for(m in 1:length(multipliers)){
-    if(!multipliers[m] %in% c("input", "output", "income", "employment.closed", "employment.physical")){
-      stop(paste(multipliers[m], "is not a valid option. Valid options are: output, input, income, employment.closed and/or employment.physical"))
+    if(!multipliers[m] %in% c("input", "output", "wage", "employment.closed", "employment.physical")){
+      stop(paste(multipliers[m], "is not a valid option. Valid options are: output, input, wage, employment.closed and/or employment.physical"))
     }
   }
   L <- io$L
@@ -98,7 +98,7 @@ multipliers <- function(io, ES, regions = "all", sectors = "all", multipliers, w
   ############
   ## Income ##
   ############
-  if("income" %in% multipliers){
+  if("wage" %in% multipliers){
     n <- length(wage.row)
     wages <- matrix(V[wage.row, ], nrow = n)
     wagenames <- V_label[wage.row,1]
@@ -107,13 +107,13 @@ multipliers <- function(io, ES, regions = "all", sectors = "all", multipliers, w
     X[i] <- 1
     inc <- t(wages %*% L %*% diag(c(1/X)))
     # Putting it away
-    colnames(inc) <- paste("income",wagenames, sep = ".")
+    colnames(inc) <- paste("wage",wagenames, sep = ".")
     for(r in 1:length(regions)){
       i <- which(RS_label[, 1] %in% regions[r])
       i <- intersect(i, location)
       sector <- RS_label[i,2]
       income <- matrix(inc[i,], nrow = length(i))
-      colnames(income) <- paste("income", wagenames, sep = ".")
+      colnames(income) <- paste("wage", wagenames, sep = ".")
       rownames(income) <- sector
       mult[[r]] <- cbind(mult[[r]], income)
     }

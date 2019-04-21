@@ -12,12 +12,12 @@ export.total <- function(io){
   # Getting to work
   export <- rep(NA, dim(Z)[1])
   exports <- export
-  if(!exists("io$E") & length(regions) == 1) stop("There is only one region and no exports. Check io$E")
+  if(!'E' %in% names(io) & length(regions) == 1) stop("There is only one region and no exports. Check io$E")
   check <- 0
-  if(exists("io$E")){
+  if('E' %in% names(io)){
     check <- 1
     E <- io$E
-    if(dim(E)[2] > 1){
+    if(dim(E)[2] > 1){          # Turning matrix into vector
       one <- matrix(rep(1, dim(E)[2]))
       E <- E %*% one
     }

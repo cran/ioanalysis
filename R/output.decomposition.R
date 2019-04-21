@@ -111,7 +111,7 @@ output.decomposition <- function(io1, io2, origin = "all", cause = "all"){
     names(outputlist) <- region
     for(r in 1:length(region)){
       i <- which(RS_label[,1] == region[r])
-      temp <- output[i, ]
+      temp <- matrix(output[i, ], ncol = dim(output)[2])
       rownames(temp) <- RS_label[i, 2]
       outputlist[[r]] <- temp
     }

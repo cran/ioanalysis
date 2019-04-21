@@ -47,26 +47,19 @@ agg.sector <- function(io, sectors, newname = "newname"){
   IO$Z <- S %*% io$Z %*% t(S)
   IO$RS_label <- RS_label
   # Checking to see if the final demand is aggregated
-  check <- 0
-  if(dim(io$f_label)[2] == 1){
-    check <- 1
-  }
-  if(check == 0){
-    IO$f <- S %*% io$f
-  } else if(check == 1){
-    IO$f <- io$f
-  }
-  IO$f_label <- io$f_label
+  IO$f <- S %*% io$f
+  
+  IO$f_label <- matrix(io$f_label, nrow = 2)
   if(!is.null(io$E)){
     IO$E <- S %*% io$E
-    IO$E_label <- io$E_label
+    IO$E_label <- matrix(io$E_label, nrow = 2)
   }
   IO$X <- S %*% io$X
   if(!is.null(io$V)){
     IO$V <- io$V %*% t(S)
     IO$V_label <- io$V_label
   }
-  if(exists("io$M")){
+  if('M' %in% names(io)){
     IO$M <- io$M %*% t(S)
     IO$M_label <- io$M_label
   }
@@ -74,10 +67,9 @@ agg.sector <- function(io, sectors, newname = "newname"){
     IO$fV <- io$fV
     IO$fV_label <- io$fV_label
   }
-  xhat <- matrix(1/IO$X, ncol = n, nrow = n)
-  IO$A <- IO$Z * xhat
-  xhat <- matrix(1/IO$X, ncol = n, nrow = n, byrow = TRUE)
-  IO$B <- IO$Z * xhat
+  xhat <- diag(c(1/IO$X))
+  IO$A <- IO$Z %*% xhat
+  IO$B <- xhat %*% IO$Z
   IO$L <- leontief.inv(A = IO$A)
   IO$G <- ghosh.inv(B = IO$B)
   class(IO) <- "InputOutput"
