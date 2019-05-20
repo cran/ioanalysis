@@ -5,6 +5,7 @@ as.inputoutput <- function(Z, RS_label,
                            V, V_label,
                            M, M_label,
                            fV, fV_label,
+                           P, P_label,
                            A, B, L, G)
 {
   # Creating the object
@@ -21,10 +22,12 @@ as.inputoutput <- function(Z, RS_label,
   io$RS_label <- cbind(io$RS_label, as.character(RS_label[, 2]))
   
   # Total Production -- a vector
+  if(class(X) != 'matrix'){X = as.matrix(X)}
   io$X <- matrix(X, ncol = 1)
 
   # Final demand matrix -- could be a matrix or a vector
   if(!missing(f)){
+    if(class(f) != 'matrix'){f = as.matrix(f)}
     if( is.null(dim(f)) ){
       if( length(f) != dim(io$Z) ) stop("Column dimension of f and Z must match")
       io$f <- matrix(f, ncol = 1)
@@ -50,6 +53,7 @@ as.inputoutput <- function(Z, RS_label,
 
   # Export matrix -- could be a matrix or a vector
   if(!missing(E)){
+    if(class(E) != 'matrix'){E = as.matrix(E)}
     if( is.null(dim(E)) ){
       if(length(E) != length(X)) stop("Column dimension of E and Z must match")
       io$E <- matrix(E)
@@ -70,6 +74,7 @@ as.inputoutput <- function(Z, RS_label,
 
   # Value added -- could be a matrix or a vector
   if(!missing(V)){
+    if(class(V) != 'matrix'){X = as.matrix(V)}
     if( is.null(dim(V)) ){
       if(length(V) != length(X)) stop("Row dimension of V and Z must match")
       io$V <- matrix(V, nrow = 1)
@@ -130,6 +135,15 @@ as.inputoutput <- function(Z, RS_label,
     io$fV_label <- matrix(fV_label)
   }
   
+  if(!missing(P) & missing(P_label)) stop('If the physical matrix (P) is supplied, a label must match')
+  if(!missing(P) & !missing(P_label)){
+    if(is.null(dim(P_label))) stop('P_label must be an nx2 matrix')
+    if(dim(P)[1] != dim(P_label)[1]) stop("The row dimension of P must match P_label")
+    if(all(dim(P) != dim(A))) stop('The dimensions of P and Z must match')
+    io$P = as.matrix(P)
+    io$P_label = P_label
+  }
+  
   # To avoid dividing by zero when calculating technical coefficient matrix
   i <- which(X == 0)
   X[i] <- 1
@@ -138,6 +152,7 @@ as.inputoutput <- function(Z, RS_label,
     xhat <- diag(c(1/X))
     io$A <- Z %*% xhat
   } else {
+    if(class(A) != 'matrix'){A = as.matrix(A)}
     io$A <- A
   }
   io$A <- as.matrix(io$A)
@@ -147,6 +162,7 @@ as.inputoutput <- function(Z, RS_label,
     xhat <- diag(c(1/X))
     io$B <- xhat %*% Z
   } else {
+    if(class(B) != 'matrix'){B = as.matrix(B)}
     io$B <- B
   }
   io$B <- as.matrix(io$B)
@@ -154,11 +170,17 @@ as.inputoutput <- function(Z, RS_label,
   # Creating the Leontief inverse
   if(missing(L)){
     io$L <- leontief.inv(A = io$A)
+  } else {
+    if(class(L) != 'matrix'){L = as.matrix(L)}
+    io$L = L
   }
 
   # Creating the Ghoshian inverse
   if(missing(G)){
     io$G <- ghosh.inv(B = io$B)
+  } else {
+    if(class(G) != 'matrix'){G = as.matrix(G)}
+    io$G = G
   }
 
   # Finalizing the object

@@ -16,7 +16,7 @@
 %%%%%%%%%%%
 \usage{
 as.inputoutput(Z, RS_label, f, f_label, E, E_label, X, V, V_label, M, M_label, 
-               fV, fV_label, A, B, L, G)
+               fV, fV_label, P, P_label, A, B, L, G)
 }
 \arguments{
 Let n = #sectors*#regions, l = # of labels, m = arbitrary length, r = #regions
@@ -33,6 +33,8 @@ Let n = #sectors*#regions, l = # of labels, m = arbitrary length, r = #regions
   \item{M_label}{Not required. A mx1 "column" matrix to identify the rows of imports. \code{RS_label} identifies the columns.}
 \item{fV}{Not Required. The matrix of final demand's value added}
 \item{fV_label}{Not Required. Column matrix to identify the row elements of \code{fV}}
+\item{P}{Not Required. The matrix of intermediate transactions in physical units}
+\item{P_label}{Not Required. A nx2 matrix to identify the regions and sectors of \code{P}}
   \item{A}{Not required. A nxn matrix of technical input coefficients. If not provided, \code{A} is calculated for you.}
   \item{B}{Not required. A nxn matrix of technical output coefficients. If not provided, \code{B} is calculated for you.}
   \item{L}{Not required. The Leontief inverse. If not provided, \code{L} is calculated for you.}

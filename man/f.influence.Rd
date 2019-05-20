@@ -4,7 +4,8 @@
 \title{Field of Influence}
 \description{Calculates the field of influence. Can handle first to nth order field of influence. Uses the method as Sonis & Hewings 1992. This is a recursive technique, so computation time depends on the size of the data and order of field of influence.
 
-This function is primarily intended as a helper function for \code{\link{inverse.important}}
+NOTE: If you want to examine a \% productivity shock to a specific region-sector, see \code{\link{inverse.important}}.
+
 }
 
 \usage{f.influence(io, i , j)}
