@@ -2,7 +2,7 @@ agg.region <- function(io, regions, newname = "newname"){
   # Preliminaries
   if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
   if(missing(regions)) stop("Please specify which regions you wish to aggregate")
-  if(missing(newname)) stop("Please specify the new name for the aggregated sectors.")
+  if(missing(newname)) stop("Please specify the newname for the aggregated sectors.")
   RS_label <- io$RS_label
   f_label <- io$f_label
   # Checking to see if the final demand is aggregated

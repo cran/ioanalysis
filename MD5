@@ -1,9 +1,10 @@
-baee72a4c1eed577468b1066d0beba9b *DESCRIPTION
-929c3a796acdf3cad3ce4044a6031f6c *NAMESPACE
-24412bfd9c33bffc1a7c0e45771fc1cf *R/agg.region.R
+a40efe5d1100c7e854683df0667748bb *DESCRIPTION
+e094f7146a68e81fbfc860ed43af287e *NAMESPACE
+5793f9bc0c1b0d0de5a3492ae122e70c *R/agg.region.R
 2fc7d9bff178f28775d6ed6979934517 *R/agg.sector.R
 6ccab21480d7c035caf541d7e201d411 *R/as.inputoutput.R
 970ceb03a44a0d14df9e17aeac92428f *R/check.RS.R
+d1e19fb43d80cb0a1c16647b8cbc7eb5 *R/disaggregate.R
 0ba1db5d55853fe2d7953a252c3c5e62 *R/easy.select.R
 2d789c03fa800d9356ee50a3a6863768 *R/export.coef.R
 4a1dc3103b9a7bfa775b202f41fc7037 *R/export.total.R
@@ -11,7 +12,8 @@ baee72a4c1eed577468b1066d0beba9b *DESCRIPTION
 263ffe08f56d3ece01bda963c49d5506 *R/f.influence.R
 348e71c5cfc15cc615785afbb2c33e0d *R/f.influence.total.R
 149b0c3310571131225a6b16cc5e2f73 *R/ghosh.inv.R
-d0d0a76ceb8d1548e44cb5b594548fa4 *R/heatmap.io.R
+53c14b110e62a42634bff26e8073890f *R/heatmap.io.R
+0f14841daeb5549700efea0e752865de *R/hist3d.io.R
 d14f95e13ae8526613c80fdb2dbb2836 *R/import.coef.R
 e5e69b0e49028ac948dc44536b4d4055 *R/import.total.R
 1f4241f5666e23c2d8853993854a2ba4 *R/inverse.important.R
@@ -36,6 +38,7 @@ daf8fabb387bdf5bcfa6129192806cc8 *man/agg.region.Rd
 e5072739df95e4b2361bc9f8c57d7791 *man/agg.sector.Rd
 6d782b0d5abc71332649ea666866d557 *man/as.inputoutput.Rd
 94f6641d236875ad49a824763d31bbff *man/check.RS.Rd
+83f6a22388686d585530cc31df96ea0f *man/disaggregate.Rd
 182ec631f39658818936d9a0c5fdde0b *man/easy.select.Rd
 23d751fe50d38beacbd9ecf35fec9bb5 *man/export.coef.Rd
 a88d58ee53dff77e522044583cd7cd4a *man/export.total.Rd
@@ -43,7 +46,8 @@ a88d58ee53dff77e522044583cd7cd4a *man/export.total.Rd
 fc0721cab04e81f359102c08aa24de57 *man/f.influence.Rd
 1a80022a4bc13d617bddcdec15b2916f *man/f.influence.total.Rd
 4b17fa8d9ab707d53aa82c283a122ed4 *man/ghosh.inv.Rd
-4666d1798de22670dda8de62bade914a *man/heatmap.io.Rd
+720501e3a8713b5ac5543067db71f6fc *man/heatmap.io.Rd
+c7f334394ea7644c4edebd058de46c8e *man/hist3d.io.Rd
 1842e6b08181a43c0d2e77422a563806 *man/inverse.important.Rd
 3adfdef224918d633bdc65fb9077392d *man/key.sector.Rd
 96fa9bb8bcb9a2a183036dc518aed261 *man/leontief.inv.Rd

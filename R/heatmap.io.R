@@ -1,5 +1,6 @@
 heatmap.io = function(obj, RS_label = NULL, regions_x = 'all', sectors_x = 'all', regions_y = 'all', sectors_y = 'all',
-                      ES_x = NULL, ES_y = NULL, FUN = NULL, low = NULL, high = NULL){
+                      ES_x = NULL, ES_y = NULL, FUN = NULL, low = NULL, high = NULL,
+                      min = NA, max = NA){
   # Checking inputs are correctly specified
   if(is.null(RS_label)){stop('RS_label must be provided; it generates the labels for the heatmap.')}
   if(!is.null(ES_x) & class(ES_x) != 'EasySelect') stop('ES_x must be an "EasySelect" object. See ?easy.select')
@@ -133,9 +134,11 @@ heatmap.io = function(obj, RS_label = NULL, regions_x = 'all', sectors_x = 'all'
   xaxis = long$xaxis
   yaxis = long$yaxis
   
+      limit = c(min, max)
+  
   ggplot(long, aes(x = xaxis, y = yaxis, fill = X))+ 
     geom_tile(color = 'white') +
-    scale_fill_gradient(low = low, high = high) +
+    scale_fill_gradient(low = low, high = high, limits = limit) +
     labs(x = '', y = '', fill = 'Value') + 
     scale_x_discrete(expand = c(0, 0)) +
     scale_y_discrete(expand = c(0, 0)) +

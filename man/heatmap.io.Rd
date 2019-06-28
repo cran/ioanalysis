@@ -9,7 +9,8 @@ A visualization tool for matrices belonging to an input-output system.
 \usage{
 heatmap.io(obj, RS_label = NULL, regions_x = 'all', sectors_x = 'all', 
            regions_y = 'all', sectors_y = 'all',
-           ES_x = NULL, ES_y = NULL, FUN = NULL, low = NULL, high = NULL)
+           ES_x = NULL, ES_y = NULL, FUN = NULL, low = NULL, high = NULL,
+           min = NA, max = NA)
 }
 %- maybe also 'usage' for other objects documented here.
 \arguments{
@@ -24,6 +25,8 @@ heatmap.io(obj, RS_label = NULL, regions_x = 'all', sectors_x = 'all',
   \item{FUN}{The transformation of the elements in \code{obj} such as \code{log()}}
   \item{low}{The color of the low values. Default is \code{"yellow"}. }
   \item{high}{The color of the high values. Default is \code{"blue"}. }
+  \item{min}{The minimum value for the color legend. Default of NA == min(obj). Both min and max must be provided to change default.}
+  \item{max}{The maximum value for the color legend. Default of NA == max(obj). Both min and max must be provided to change default.}
 }
 \details{
 \code{heatmap.io} uses ggplot2::geom_tiles() to create the visualization of the object.
@@ -41,7 +44,7 @@ class(toy.IO)
 
 RS_label = toy.IO$RS_label
 obj = toy.IO$L
-heatmap.io(obj, RS_label, FUN = log)
+heatmap.io(obj, RS_label, FUN = log, max = 3)
 
 cuberoot = function(x){x^(1/3)}
 heatmap.io(obj, RS_label, FUN = cuberoot)
