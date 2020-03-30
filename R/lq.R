@@ -1,6 +1,6 @@
 lq <- function(io){
   # Preliminaries
-  if(class(io) != "InputOutput") stop("io must be of class InputOutput. See ?as.inputoutput")
+  if(!"InputOutput" %in% class(io)) stop("io must be of class InputOutput. See ?as.inputoutput")
   A <- io$A
   X <- io$X
   RS_label <- io$RS_label

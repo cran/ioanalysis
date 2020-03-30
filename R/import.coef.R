@@ -1,11 +1,16 @@
 import.coef <- function(io, region){
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
-  if(FALSE %in% (dim(io$A) == dim(io$M))){
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  
+  if(is.null(io$M)){
+    square = 1
+    io$M = matrix(0, ncol = dim(io$A)[1], nrow = dim(io$A)[1])
+  } else if(FALSE %in% (dim(io$A) == dim(io$M))){
     if(check.RS(io) == FALSE) stop("Regions must have same sectors. Try ?locate.mismatch, ?agg.sector, ?easy.select")
     square <- 0
-  } else{
+  } else {
     square <- 1
   }
+  
   if(!class(region) %in% c("numeric", "integer")) stop("Region must be an integer")
   if(length(region) != 1) stop("Region can only be one number")
   A <- io$A

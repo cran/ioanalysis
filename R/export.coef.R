@@ -1,6 +1,6 @@
 export.coef <- function(io, region){
   # This is a helper function; it is not intended for general use.
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
   if(check.RS(io) == FALSE) stop("Regions must have same sectors. Try ?locate.mismatch, ?agg.sector, ?easy.select")
   if(!class(region) %in% c("numeric", "integer")) stop("Region must be an integer")
   if(length(region) != 1) stop("Region can only be one number")

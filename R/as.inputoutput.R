@@ -22,12 +22,12 @@ as.inputoutput <- function(Z, RS_label,
   io$RS_label <- cbind(io$RS_label, as.character(RS_label[, 2]))
   
   # Total Production -- a vector
-  if(class(X) != 'matrix'){X = as.matrix(X)}
+  if(!'matrix' %in% class(X)){X = as.matrix(X)} # Checking to see if a matrix class object
   io$X <- matrix(X, ncol = 1)
 
   # Final demand matrix -- could be a matrix or a vector
   if(!missing(f)){
-    if(class(f) != 'matrix'){f = as.matrix(f)}
+    if(!'matrix' %in% class(f) ){f = as.matrix(f)} # Checking to see if a matrix class object
     if( is.null(dim(f)) ){
       if( length(f) != dim(io$Z) ) stop("Column dimension of f and Z must match")
       io$f <- matrix(f, ncol = 1)
@@ -53,7 +53,7 @@ as.inputoutput <- function(Z, RS_label,
 
   # Export matrix -- could be a matrix or a vector
   if(!missing(E)){
-    if(class(E) != 'matrix'){E = as.matrix(E)}
+    if(!'matrix' %in% class(E)){E = as.matrix(E)} # Checking to see if a matrix class object
     if( is.null(dim(E)) ){
       if(length(E) != length(X)) stop("Column dimension of E and Z must match")
       io$E <- matrix(E)
@@ -74,7 +74,7 @@ as.inputoutput <- function(Z, RS_label,
 
   # Value added -- could be a matrix or a vector
   if(!missing(V)){
-    if(class(V) != 'matrix'){X = as.matrix(V)}
+    if(!'matrix' %in% class(V)){V = as.matrix(V)} # Checking to see if a matrix class object
     if( is.null(dim(V)) ){
       if(length(V) != length(X)) stop("Row dimension of V and Z must match")
       io$V <- matrix(V, nrow = 1)
@@ -150,9 +150,9 @@ as.inputoutput <- function(Z, RS_label,
   # Technical input Coefficient Matrix
   if(missing(A)){
     xhat <- diag(c(1/X))
-    io$A <- Z %*% xhat
+    io$A <- io$Z %*% xhat
   } else {
-    if(class(A) != 'matrix'){A = as.matrix(A)}
+    if(!'matrix' %in% class(A)){A = as.matrix(A)} # Checking to see if a matrix class object
     io$A <- A
   }
   io$A <- as.matrix(io$A)
@@ -160,9 +160,9 @@ as.inputoutput <- function(Z, RS_label,
   # Technical Output Coefficient Matrix
   if(missing(B)){
     xhat <- diag(c(1/X))
-    io$B <- xhat %*% Z
+    io$B <- xhat %*% io$Z
   } else {
-    if(class(B) != 'matrix'){B = as.matrix(B)}
+    if(!'matrix' %in% class(B)){B = as.matrix(B)} # Checking to see if a matrix class object
     io$B <- B
   }
   io$B <- as.matrix(io$B)
@@ -171,7 +171,7 @@ as.inputoutput <- function(Z, RS_label,
   if(missing(L)){
     io$L <- leontief.inv(A = io$A)
   } else {
-    if(class(L) != 'matrix'){L = as.matrix(L)}
+    if(!'matrix' %in% class(L)){L = as.matrix(L)} # Checking to see if a matrix class object
     io$L = L
   }
 
@@ -179,7 +179,7 @@ as.inputoutput <- function(Z, RS_label,
   if(missing(G)){
     io$G <- ghosh.inv(B = io$B)
   } else {
-    if(class(G) != 'matrix'){G = as.matrix(G)}
+    if(!'matrix' %in% class(G)){G = as.matrix(G)} # Checking to see if a matrix class object
     io$G = G
   }
 

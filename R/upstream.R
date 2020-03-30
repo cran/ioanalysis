@@ -1,6 +1,6 @@
 upstream <- function(io, ES, regions = "all", sectors = "all"){
   # Preliminaries
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
   RS_label <- io$RS_label
   Z <- io$Z
   A <- io$A

@@ -1,6 +1,6 @@
 multipliers <- function(io, ES, regions = "all", sectors = "all", multipliers, wage.row, employ.closed.row, employ.physical.row){
   # Preliminaries
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
   if(missing(multipliers)) stop('Please specify multipliers = . Options are: output, input, wage, and/or employment')
   multipliers <- unique(multipliers)
   for(m in 1:length(multipliers)){

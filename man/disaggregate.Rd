@@ -48,7 +48,7 @@ V = list(colSums(toy.IO$Z[, 1:5]), colSums(toy.IO$Z[, 6:10]))
 io = agg.region(toy.IO, regions = c(1,2), newname = 'Magic')
 
 A.new = disaggregate(io, X, U, V, new.regions = unique(toy.IO$RS_label[,1]))
-Z.new = A.new %*% diag(c(unlist(X)))
+Z.new = A.new \%*\% diag(c(unlist(X)))
 
 io.new = as.inputoutput(Z = Z.new, X = unlist(X), RS_label = toy.IO$RS_label)
 }

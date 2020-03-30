@@ -36,9 +36,6 @@ John J. P. Wade
 
 
 
-\seealso{
-\code{\link{ras}}
-}
 \examples{
 data(toy.IO)
 class(toy.IO)

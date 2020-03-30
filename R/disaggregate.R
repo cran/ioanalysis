@@ -1,9 +1,9 @@
 disaggregate = function(io, X = list(), U = list(), V = list(), new.regions, check = TRUE){
   # Checking for correct inputs
-  if(class(io) != "InputOutput") stop("io must be of class InputOutput. See ?as.inputoutput")
-  if(class(X) != 'list') stop('X must be a list over each regions total output')
-  if(class(U) != 'list') stop('U must be a list over each regions row sums of intermediate transactions (Z)')
-  if(class(V) != 'list') stop('V must be a list over each regions col sums of intermediate transactions (Z)')
+  if(!"InputOutput" %in% class(io)) stop("io must be of class InputOutput. See ?as.inputoutput")
+  if(!'list' %in% class(X)) stop('X must be a list over each regions total output')
+  if(!'list' %in% class(U)) stop('U must be a list over each regions row sums of intermediate transactions (Z)')
+  if(!'list' %in% class(V)) stop('V must be a list over each regions col sums of intermediate transactions (Z)')
   
   # Checking for consistent inputs
   if(length(X) != length(new.regions)) stop('X and new.regions must have the same number of regions')
@@ -66,7 +66,7 @@ disaggregate = function(io, X = list(), U = list(), V = list(), new.regions, che
   # Calculating location quotients for the whole system.
   lq      = vector('list', R)
   lqtilde = lq
-  X.tilde  = lq 
+  X.tilde = lq 
   bot     = io$X/sum(io$X)
   for(i in 1:R){
     lq[[i]] = matrix(X[[i]]/sum(X[[i]]) / bot)

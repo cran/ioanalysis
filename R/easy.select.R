@@ -1,5 +1,5 @@
 easy.select <- function(io){
-  if(!class(io) == "InputOutput") stop('Object must be of "InputOutput" class. See ?as.inputoutput()')
+  if(!"InputOutput" %in% class(io)) stop('Object must be of "InputOutput" class. See ?as.inputoutput()')
   RS_label <- io$RS_label
   selection <- NULL
   continueSelect <- 0

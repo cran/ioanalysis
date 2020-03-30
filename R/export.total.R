@@ -1,5 +1,5 @@
 export.total <- function(io){
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
   Z <- io$Z
   f <- io$f
   RS_label <- io$RS_label

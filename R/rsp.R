@@ -1,5 +1,5 @@
 rsp <- function(io){
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
   A <- io$A
   X <- io$X
   M <- import.total(io)

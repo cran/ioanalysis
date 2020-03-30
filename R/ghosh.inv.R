@@ -1,7 +1,7 @@
 ghosh.inv <- function(Z = NULL, X, B, RS_label, regions){
   # Preliminaries
   if(!missing(regions)){
-    if(class(Z) == "InputOutput"){
+    if("InputOutput" %in% class(Z)){
       RS_label <- Z$RS_label
       if(class(regions) == "character"){
         for(k in 1:length(regions)){
@@ -12,7 +12,7 @@ ghosh.inv <- function(Z = NULL, X, B, RS_label, regions){
         region <- unique(RS_label[, 1])
         regions <- region[regions]
       }
-    } else if(class(Z) != "InputOutput"){
+    } else if(!"InputOutput" %in% class(Z)){
       if(missing(RS_label)) stop("Missing RS_label. This is needed to select the correct elements of Z and X to calculate the Leontief inverse.")
       if(class(regions) == "character"){
         for(k in 1:length(regions)){
@@ -29,7 +29,7 @@ ghosh.inv <- function(Z = NULL, X, B, RS_label, regions){
   ######################################
   ## Solving for the Ghoshian inverse ##
   ######################################
-  if(class(Z) == "InputOutput"){
+  if("InputOutput" %in% class(Z)){
     B <- Z$B
     # Full InputOutput
     if(missing(regions)){

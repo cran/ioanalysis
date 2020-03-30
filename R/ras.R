@@ -1,6 +1,6 @@
 ras <- function(io, x1, u1, v1, tol, maxiter, type, verbose = FALSE){
   # Preliminary checks
-  if(class(io) == "InputOutput"){
+  if("InputOutput" %in% class(io)){
     A <- io$A
   } else {
     if(dim(io)[1] != dim(io)[2]) stop("Matrix of technical input coefficients (A) must be a square.")

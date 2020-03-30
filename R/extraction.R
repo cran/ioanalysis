@@ -1,8 +1,8 @@
 extraction <- function(io, ES = NULL, regions = 1, sectors = 1, type = "backward.total", aggregate = FALSE, simultaneous = FALSE, normalize = FALSE){
   # Preliminaries
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
   if(!is.null(ES)){
-    if(class(ES) != "EasySelect") stop('ES should be of "EasySelect". See ?easy.select')
+    if(!"EasySelect" %in% class(ES)) stop('ES should be of "EasySelect". See ?easy.select')
   }
   for(t in 1:length(type)){
     if(!type[t] %in% c("backward", "forward", "backward.total", "forward.total")){

@@ -1,6 +1,6 @@
 mpm <- function(io){
   # Preliminaries
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
   L <- io$L
   X <- io$X
   ####################

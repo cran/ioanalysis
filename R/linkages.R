@@ -13,7 +13,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
     }
   }
   # Grabbing the objects we will need
-  if(class(io) == "InputOutput"){
+  if("InputOutput" %in% class(io)){
     # Grabbing and calculating the matrices we need
     n <- dim(io$Z)[1]
     A <- io$A                                # Input technical coefficients
@@ -32,7 +32,7 @@ linkages <- function(io, ES = NULL, regions = "all", sectors = "all", type = c("
       region <- unique(ES[, 2])
     }
     RS_label <- io$RS_label                  # Region Sector Label
-  } else if(class(io) != "InputOutput") stop('io must be an "InputOuput" object. See ?as.inputoutput')
+  } else if(!"InputOutput" %in% class(io)) stop('io must be an "InputOuput" object. See ?as.inputoutput')
 
 
   # Creating an object to store important things

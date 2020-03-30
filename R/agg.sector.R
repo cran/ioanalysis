@@ -1,6 +1,6 @@
 agg.sector <- function(io, sectors, newname = "newname"){
   # Preliminaries
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
   if(missing(sectors)) stop("Please specify which sectors you wish to aggregate")
   if(missing(newname)) stop("Please specify the new name for the aggregated sectors.")
   RS_label <- io$RS_label

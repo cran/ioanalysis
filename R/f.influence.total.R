@@ -1,6 +1,6 @@
 f.influence.total = function(io){
   # Checking if we have an InputOuput object
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
   
   # Getting started
   n = dim(io$L)[1]

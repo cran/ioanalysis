@@ -1,5 +1,5 @@
 f.influence <- function(io, i, j){
-  if(class(io) != "InputOutput") stop('io should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
   if(length(i) != length(j)) stop("i must be the same length as j")
   n <- dim(io$L)[1]
   if(length(i) >= n) stop("Field of Influence is only defined up to n-1 terms, where n = #sectors * #regions")

@@ -1,7 +1,7 @@
 output.decomposition <- function(io1, io2, origin = "all", cause = "all"){
   # Preliminaries
-  if(class(io1) != "InputOutput") stop('io1 should be of "InputOutput" class. See ?as.inputoutput')
-  if(class(io2) != "InputOutput") stop('io2 should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io1)) stop('io1 should be of "InputOutput" class. See ?as.inputoutput')
+  if(!"InputOutput" %in% class(io2)) stop('io2 should be of "InputOutput" class. See ?as.inputoutput')
   if(!all(io1$RS_label == io2$RS_label )) stop("RS_label for io1 and io2 do not match.They must be the same size. Try which(io1$RS_label != io2$RS_label) or see ?locate.mismatch.")
   RS_label <- io1$RS_label
   L1 <- io1$L
