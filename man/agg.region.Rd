@@ -13,7 +13,7 @@ agg.region(io, regions, newname = "newname")
 }
 \arguments{
 \item{io}{An \code{InputOutput} class object from \code{\link{as.inputoutput}}}
-  \item{regions}{Character. Specific regions to be aggregated. Can either be a character that exactly matches the name of the region in \code{RS_label} or the number of the region in the order it appears in \code{RS_label}.}
+  \item{regions}{Character. Specific regions to be aggregated. Can either be a character that exactly matches the name of the region in \code{RS_label} or the number of the region in the order it appears in \code{RS_label}. May also be \code{'all'} to select all regions.}
   \item{newname}{Character. The name to give to the new aggregated region.}
 }
 

@@ -15,8 +15,12 @@ agg.region <- function(io, regions, newname = "newname"){
     regions <- as.character(regions)
   }
   if(class(regions) == "character"){
-    for(k in 1:length(regions)){
-      if(!regions[k] %in% RS_label[, 1]) stop(paste(regions[k], "is not a region in RS_label. Check spelling, capitalization, and punctuation."))
+    if('all' %in% regions){
+      regions = unique(RS_label[,1])
+    } else {
+      for(k in 1:length(regions)){
+        if(!regions[k] %in% RS_label[, 1]) stop(paste(regions[k], "is not a region in RS_label. Check spelling, capitalization, and punctuation."))
+      }
     }
   }
   else if(class(regions) == "numeric" | class(regions) == "integer"){
@@ -26,7 +30,7 @@ agg.region <- function(io, regions, newname = "newname"){
   # Checking to each region for aggregation has the same regions
   sectors <- unique(RS_label[which(RS_label[, 1] %in% regions), 2])
   if(check.RS(io) == FALSE){
-    stop("Each region must have the same sectors in the same order. See ?check.RS")
+    stop("Each region must have the same sectors in the same order in order to aggregate the regions. See ?check.RS")
   }
   # Aggregating regions
   n <- dim(RS_label)[1]
@@ -78,6 +82,9 @@ agg.region <- function(io, regions, newname = "newname"){
   i <- which(RS_label[, 1] %in% regions)
   RS_label <- RS_label[-i, ]
   S <- I[-i, ]
+  if('numeric' %in% class(S)){ # Allowing for aggregating all regions
+    S = matrix(c(S), nrow = 1)
+  }
   if(check == 0){
     i <- which(f_label[1, ] %in% regions)
     f_label <- f_label[, -i]
@@ -113,6 +120,10 @@ agg.region <- function(io, regions, newname = "newname"){
     IO$fV_label <- io$fV_label
   }
   xhat <- diag(c(1/IO$X))
+  if(dim(IO$X)[1] == 1){ # Allowing for aggregating all regions
+    xhat = matrix(1/IO$X)
+    IO$Z = matrix(IO$Z)
+  }
   IO$A <- IO$Z %*% xhat
   IO$B <- xhat %*% IO$Z
   IO$L <- leontief.inv(A = IO$A)

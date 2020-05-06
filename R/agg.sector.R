@@ -12,8 +12,12 @@ agg.sector <- function(io, sectors, newname = "newname"){
     sectors <- as.character(sectors)
   }
   if(class(sectors) == "character"){
-    for(k in 1:length(sectors)){
-      if(!sectors[k] %in% RS_label[, 2]) stop(paste(sectors[k], "is not a sector in RS_label. Check spelling, capitalization, and punctuation."))
+    if('all' %in% sectors){
+      sectors = unique(RS_label[, 2])
+    } else {
+      for(k in 1:length(sectors)){
+        if(!sectors[k] %in% RS_label[, 2]) stop(paste(sectors[k], "is not a sector in RS_label. Check spelling, capitalization, and punctuation."))
+      }
     }
   }
   else if(class(sectors) == "numeric" | class(sectors) == "integer"){
@@ -38,6 +42,9 @@ agg.sector <- function(io, sectors, newname = "newname"){
   i <- which(RS_label[, 2] %in% sectors)
   RS_label <- RS_label[-i, ]
   S <- I[-i, ]
+  if('numeric' %in% class(S)){ # Allowing for aggregating all sectors
+    S = matrix(c(S), nrow = 1)
+  }
     # creating a new InputOuput object
   if(dim(S)[2] > 1500){
     cat("\n\n    Calculating new InputOuput object...\n\n")
@@ -68,6 +75,10 @@ agg.sector <- function(io, sectors, newname = "newname"){
     IO$fV_label <- io$fV_label
   }
   xhat <- diag(c(1/IO$X))
+  if(dim(IO$X)[1] == 1){ # Allowing for aggregating all sectors
+    xhat = matrix(1/IO$X)
+    IO$Z = matrix(IO$Z)
+  }
   IO$A <- IO$Z %*% xhat
   IO$B <- xhat %*% IO$Z
   IO$L <- leontief.inv(A = IO$A)

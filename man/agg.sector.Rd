@@ -11,7 +11,7 @@ agg.sector(io, sectors, newname = "newname")
 
 \arguments{
   \item{io}{An \code{InputOutput} class object from \code{\link{as.inputoutput}}}
-  \item{sectors}{Character. Specific sectors to be aggregated. Can either be a character that exactly matches the name of the sector in \code{RS_label} or the number of the sector in the order it appears in \code{RS_label}.}
+  \item{sectors}{Character. Specific sectors to be aggregated. Can either be a character that exactly matches the name of the sector in \code{RS_label} or the number of the sector in the order it appears in \code{RS_label}. May also be \code{'all'} to select all sectors.}
   \item{newname}{Character. The name to give to the new aggregated sector.}
 }
 
