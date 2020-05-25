@@ -1,20 +1,27 @@
 \name{feedback.loop}
 \alias{feedback.loop}
+\alias{feedback.loop.matrix}
 
 \title{Feedback Loop Analysis}
 
 \description{Calculates the complete hierarchical feedback loop as described in Sonis et al. (1995). A feed back loop is complete if it contains all region-sector pairs. Much like a sudoku puzzle, there may only be one identified cell in each row and each column per loop. The loops are hierarchical in the sense that first loop maximizes the transactions given the aforementioned constraints.
 
+There are TWO functions for RAM concerns. A singular function storing all feedback loop matrices grows at rate n^3. Alternatively, constructing feedback loop matrices one at a time translates to the output of \code{feedback.loop} growth rate of 4n^2.
+
 Note: A feedback loop solves the Linear Programming Assignment problem.
 
 Warning: Computation time depends on size of the system. A progress bar is printed.}
 
-\usage{feedback.loop(io, agg.sectors, agg.regions)}
+\usage{feedback.loop(io, agg.sectors, agg.regions, n.loops)
+feedback.loop.matrix(fl, loop)}
 
 \arguments{
   \item{io}{An object of class \code{InputOutput} calculated from \code{\link{as.inputoutput}}}
   \item{agg.sectors}{An option to aggregate the sectors to compare regions only. Default is \code{FALSE}.}
   \item{agg.regions}{An option to aggregate the regions to compare sectors only. Default is \code{FALSE}.}
+  \item{n.loops}{The number of loops you wish to calculate. The default is \code{"all"}. Must either be an integer or \code{"all"}}
+  \item{fl}{An object of class \code{FeedbackLoop} created from \code{feedback.loop}}
+  \item{loop}{The loop from which you want the selector matrix.}
 }
 \details{The feedback loop solves the following optimization problem:
 
@@ -43,7 +50,7 @@ Produces a nested list: \code{fl}
 }
 
 \author{
-John J. P. Wade
+John J. P. Wade, Xiuli Liu
 }
 
 
@@ -51,13 +58,16 @@ John J. P. Wade
 \code{\link{as.inputoutput}}
 }
 \examples{
+##########################
+# The base feedback loop #
+##########################
 data(toy.IO)
 class(toy.IO)
 
 fbl = feedback.loop(toy.IO)
 
-fbl$loops[[1]]
-heatmap.io(fbl$loops[[1]], RS_label = toy.IO$RS_label)
+fl_3 = feedback.loop.matrix(fbl, 3)
+heatmap.io(fl_3, RS_label = toy.IO$RS_label)
 
 fbl$value
 fbl$per = fbl$value / sum(fbl$value) * 100
@@ -68,12 +78,14 @@ ggplot(obj, aes(x = x, y = y)) +
   geom_line() +
   labs(x = 'Loop', y = 'Percent', title = 'Proportion of Total Intermediate Transactions per Loop')
 
-# Aggregating regions
-fbl_2 = feedback.loop(toy.IO, agg.regions = TRUE)
-io_2  = agg.region(toy.IO, regions = 'all', newname = 'magic')
-heatmap.io(fbl_2$loops[[1]], RS_label = io_2$RS_label)
+###############################
+# An aggregated feedback loop #
+###############################
+fbl_agg = feedback.loop(toy.IO, agg.regions = TRUE)
+io_agg  = agg.region(toy.IO, regions = 'all', newname = 'magic')
 
-# Aggregating everything for exciting results
-feedback.loop(toy.IO, agg.regions = TRUE, agg.sectors = TRUE)
+fl_agg_1 = feedback.loop.matrix(fbl_agg, loop = 1)
+
+heatmap.io(fl_agg_1, RS_label = io_agg$RS_label)
 }
 

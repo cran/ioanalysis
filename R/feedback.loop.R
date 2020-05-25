@@ -1,6 +1,5 @@
-feedback.loop = function(io, agg.sectors = FALSE, agg.regions = FALSE){
+feedback.loop = function(io, agg.sectors = FALSE, agg.regions = FALSE, n.loops = 'all'){
   if(!"InputOutput" %in% class(io)) stop('io should be of "InputOutput" class. See ?as.inputoutput')
-  
   
   # Dealing with aggregating sectors or regions
   if(agg.sectors == TRUE){
@@ -12,9 +11,23 @@ feedback.loop = function(io, agg.sectors = FALSE, agg.regions = FALSE){
     io = agg.region(io, regions, newname = 'all.regions')
   }
   
+  RS = io$RS_label
+  
+  # Checking how many loops to perform
+  if(length(n.loops) != 1){stop('n.loops must either be "all" or the number of loops you want performed.')}
+  if(class(n.loops) == 'character'){
+    if(n.loops == 'all'){n = length(io$X)}
+    else{stop('n.loops must either be "all" or the number of loops you want performed.')}
+  }
+  if(class(n.loops) == 'numeric'){
+    if(n.loops > length(io$X)){n = length(io$X)}
+    else if(n.loops > 0){n = n.loops}
+    else{stop('n.loops must be a value between 0 and length(io$X)')}
+  }
+  
+  
   # Grabbing what we need
   Z = io$Z
-  n = dim(io$Z)[1]
   
   # Initiating an output object
   fl = list('loops' = rep(list(NULL), n), 'value' = NULL)
@@ -54,12 +67,24 @@ feedback.loop = function(io, agg.sectors = FALSE, agg.regions = FALSE){
       
       # Now for the solution
       opt = lp('max', vZ, Ae, constraint, rhs)
-      fl$loops[[l]] = matrix(opt$solution, ncol = n)
+      # Creating a compact loop from the solution
+      soln = matrix(opt$solution, ncol = n)
+      results = data.frame(row = rep(0, n), col = 0, name.row = 0, name.col = 0)
+      for(i in 1:n){
+        k = which(soln[i, ] != 0)
+        results$row[i]      = i
+        results$col[i]      = k
+        results$name.row[i] = paste(RS[i,1], RS[i,2], sep = ', ')
+        results$name.col[i] = paste(RS[k,1], RS[k,2], sep = ', ')
+      }
+      
+      fl$loops[[l]] = results
       fl$value = c(fl$value, opt$objval)
       
       # Setting up for the next loop
-      Z = Z - 10^10 * fl$loops[[l]]
+      Z = Z - 10^10 * soln
     }
   }
+  class(fl) = 'FeedbackLoop'
   fl
 }
