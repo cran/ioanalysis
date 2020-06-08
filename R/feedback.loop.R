@@ -32,6 +32,8 @@ feedback.loop = function(io, agg.sectors = FALSE, agg.regions = FALSE, n.loops =
   # Initiating an output object
   fl = list('loops' = rep(list(NULL), n), 'value' = NULL)
   
+  fl = list('value' = NULL)
+  
   ###############################################################
   # Starting calculating the feedback loops and feedback values #
   ###############################################################
@@ -44,6 +46,8 @@ feedback.loop = function(io, agg.sectors = FALSE, agg.regions = FALSE, n.loops =
     # We need to set up the equality constraints of one entry per row (n) and one per column (n)
     # And the inequality constraints of being between 0 and 1 for the feedback loop elements (n^2)
     pb = txtProgressBar(0, max = n, style = 3)
+    
+    m = length(io$X)
     for(l in 1:n){
       setTxtProgressBar(pb, l)
       vZ = matrix(Z) # Vectorizing Z for optimization
@@ -69,16 +73,30 @@ feedback.loop = function(io, agg.sectors = FALSE, agg.regions = FALSE, n.loops =
       opt = lp('max', vZ, Ae, constraint, rhs)
       # Creating a compact loop from the solution
       soln = matrix(opt$solution, ncol = n)
-      results = data.frame(row = rep(0, n), col = 0, name.row = 0, name.col = 0)
-      for(i in 1:n){
-        k = which(soln[i, ] != 0)
-        results$row[i]      = i
-        results$col[i]      = k
-        results$name.row[i] = paste(RS[i,1], RS[i,2], sep = ', ')
-        results$name.col[i] = paste(RS[k,1], RS[k,2], sep = ', ')
+      
+      # Creating a vector of remaining region-sectors to be gathered
+      remaining = 2:m
+      initial = 1
+      to = initial
+      subloop = to
+      counter = 0
+      # Identifying the subloops
+      for(i in 1:(m)){
+        to = which(soln[tail(subloop, 1), ] != 0)
+        subloop = c(subloop, to)
+        if(head(subloop, 1) == tail(subloop, 1)){
+          counter = counter + 1
+          subloop = data.frame(index = subloop, RS = paste(RS[subloop, 1], RS[subloop, 2], sep = ', '))
+          fl[[paste0('loop_', l)]][[paste0('subloop_', counter)]] = subloop
+          
+          remaining = setdiff(remaining, to)
+          subloop = remaining[1]
+        } else {
+          remaining = setdiff(remaining, to)
+        }
       }
       
-      fl$loops[[l]] = results
+      # Saving the value of the identified loop
       fl$value = c(fl$value, opt$objval)
       
       # Setting up for the next loop

@@ -1,5 +1,5 @@
-eedf4bce3baa2b601056d94dd676340c *DESCRIPTION
-fa3b41c89bafebaec2c196aef62aab6f *NAMESPACE
+a625f995c3b277fba112f4cca781e5fd *DESCRIPTION
+d7139d68e49f56192e5618c841453430 *NAMESPACE
 b50a58c0f82e7e616fec5816f6c9ff9b *R/agg.region.R
 2e28fcc9b6a646adf76d08aa5135735f *R/agg.sector.R
 3574639bd78ac22d2babcb44aa3c0d0c *R/as.inputoutput.R
@@ -11,8 +11,8 @@ a5059ca73cc59890378f2c341e58aa27 *R/export.coef.R
 97ec4d2d5dfcfa455706eed7f64b7bfb *R/extraction.R
 7767eecb19d9d46030ae4fc25b310f5d *R/f.influence.R
 1491589dbbcb9a920f98bbc3b3e86e29 *R/f.influence.total.R
-44340473e44cedd2248d4851b40ec7b0 *R/feedback.loop.R
-0e84d2f640ee54226ecfeecdffe17f6d *R/feedback.loop.matrix.R
+43a93576f37899703b5ed898de165da1 *R/feedback.loop.R
+1c320056717d0917b31c9c9b519aa9ab *R/feedback.loop.matrix.R
 ebf41721c4cd32a374cdaee1b00cb51a *R/ghosh.inv.R
 53c14b110e62a42634bff26e8073890f *R/heatmap.io.R
 0f14841daeb5549700efea0e752865de *R/hist3d.io.R
@@ -47,7 +47,7 @@ a88d58ee53dff77e522044583cd7cd4a *man/export.total.Rd
 5cc31edbdaee339ee73df8facd274f20 *man/extraction.Rd
 fc0721cab04e81f359102c08aa24de57 *man/f.influence.Rd
 1a80022a4bc13d617bddcdec15b2916f *man/f.influence.total.Rd
-3ce8827a5c88c3f552bbc52edb1454bd *man/feedback.loop.Rd
+b52e26765d7b60a13083522483b860a5 *man/feedback.loop.Rd
 4b17fa8d9ab707d53aa82c283a122ed4 *man/ghosh.inv.Rd
 720501e3a8713b5ac5543067db71f6fc *man/heatmap.io.Rd
 c7f334394ea7644c4edebd058de46c8e *man/hist3d.io.Rd

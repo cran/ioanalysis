@@ -4,9 +4,9 @@
 
 \title{Feedback Loop Analysis}
 
-\description{Calculates the complete hierarchical feedback loop as described in Sonis et al. (1995). A feed back loop is complete if it contains all region-sector pairs. Much like a sudoku puzzle, there may only be one identified cell in each row and each column per loop. The loops are hierarchical in the sense that first loop maximizes the transactions given the aforementioned constraints.
+\description{Calculates the complete hierarchical feedback loop as described in Sonis et al. (1995). A feed back loop is complete if it contains all region-sector pairs. Much like a sudoku puzzle, there may only be one identified cell in each row and one identified cell in each column per loop. The loops are hierarchical in the sense that first loop maximizes the intermediate transactions given the aforementioned constraints.
 
-There are TWO functions for RAM concerns. A singular function storing all feedback loop matrices grows at rate n^3. Alternatively, constructing feedback loop matrices one at a time translates to the output of \code{feedback.loop} growth rate of 4n^2.
+There are TWO functions for RAM concerns. A singular function storing all feedback loop matrices grows at rate n^3. Alternatively, constructing feedback loop matrices one at a time translates to the output of \code{feedback.loop} growth rate of roughly 2n^2.
 
 Note: A feedback loop solves the Linear Programming Assignment problem.
 
@@ -25,13 +25,13 @@ feedback.loop.matrix(fl, loop)}
 }
 \details{The feedback loop solves the following optimization problem:
 
-\deqn{max_X vec(Z)'X}
+\deqn{max_S vec(Z)'vec(S)}
 such that:
-\deqn{i) A_{col}X = vec(1)}
-\deqn{ii) A_{row}X = vec(1)}
-\deqn{iii) vec(0) \le x \le vec(1)}
+\deqn{i) A_{col}vec(S) = vec(1)}
+\deqn{ii) A_{row}vec(S) = vec(1)}
+\deqn{iii) vec(0) \le vec(S) \le vec(1)}
 
-where \eqn{Z} is the intermediate transaction matrix from \code{io}, \eqn{X} is a vectorize selctor matrix of the cells in \eqn{Z}, \eqn{A_{col}} is a constraint matrix to ensure only one cell per column is selected, \eqn{A_{row}} is a constraint matrix to ensure only one cell per row is selected, and constraint \eqn{iii)} ensures the values in the selector matrix are either one or zero. 
+where \eqn{Z} is the intermediate transaction matrix from \code{io}, \eqn{S} is a selctor matrix of the cells in \eqn{Z}, \eqn{A_{col}} is a constraint matrix to ensure only one cell per column is selected, \eqn{A_{row}} is a constraint matrix to ensure only one cell per row is selected, and constraint \eqn{iii)} ensures the values in the selector matrix are either one or zero. 
 
 After each loop, the selected cells are set to an extremely negative number to prevent selection in the next loop.
 
@@ -40,9 +40,9 @@ See the documentation on http://www.real.illinois.edu/ for more details and inte
 
 \value{
 Produces a nested list: \code{fl}
-\item{fl}{Contains \code{"loops"} and \code{"value"}}
-\item{loops}{Contains a list over each loop's selector matrix. Retrieve by calling \code{fl$loops[[1]]}}
+\item{fl}{Contains \code{"value"}, \code{"loop_1"}, \code{"loop_2"}, ..., and \code{"loop_n"}}
 \item{value}{Contains a vector of the total value of intermediate transactions for each loop.}
+\item{loop_i}{Contains a list over each loop's subloops. Retrieve by calling \code{fl$loop_i$subloop_j}. Note each loop will likely have a different number of subloops.}
 
 
 }
@@ -65,6 +65,7 @@ data(toy.IO)
 class(toy.IO)
 
 fbl = feedback.loop(toy.IO)
+fbl$loop_1
 
 fl_3 = feedback.loop.matrix(fbl, 3)
 heatmap.io(fl_3, RS_label = toy.IO$RS_label)
@@ -75,7 +76,7 @@ fbl$per = fbl$value / sum(fbl$value) * 100
 obj = data.frame(x = 1:length(fbl$per), y = fbl$per)
 
 ggplot(obj, aes(x = x, y = y)) + 
-  geom_line() +
+  geom_line() + geom_point() +
   labs(x = 'Loop', y = 'Percent', title = 'Proportion of Total Intermediate Transactions per Loop')
 
 ###############################
