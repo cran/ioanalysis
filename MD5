@@ -1,4 +1,4 @@
-a625f995c3b277fba112f4cca781e5fd *DESCRIPTION
+7405977f4de796f963da90ca21e33050 *DESCRIPTION
 d7139d68e49f56192e5618c841453430 *NAMESPACE
 b50a58c0f82e7e616fec5816f6c9ff9b *R/agg.region.R
 2e28fcc9b6a646adf76d08aa5135735f *R/agg.sector.R
@@ -25,9 +25,9 @@ b766daf3d3860b20d46e5943f372a390 *R/import.total.R
 2ce68ed322ff65db5de6f19ac8319143 *R/locate.mismatch.R
 a628a56020b7d2d8ce66beb1a9856001 *R/lq.R
 38b8a3ba599f271296b7085aba5770b2 *R/mpm.R
-94575a2ef404dd3ff8dd88d0dadc8e49 *R/multipliers.R
+de1c9872b930dcd1d16fd02f1945c469 *R/multipliers.R
 7729d597e0dfbf14b1573b963becaf95 *R/output.decomposition.R
-38f94abbdc5b965c29e8ad34be4891f2 *R/ras.R
+39e1e7e26be7fbeabb2c2e0c63943514 *R/ras.R
 3d8bf5c0a1bcf6443e1e08e9bf799b3c *R/rsp.R
 90c544329f38456538c9efbc6bc513b8 *R/upstream.R
 e6b6f66d8f1a8f1596c1d7614fafe91b *R/vs.R
@@ -52,13 +52,14 @@ b52e26765d7b60a13083522483b860a5 *man/feedback.loop.Rd
 720501e3a8713b5ac5543067db71f6fc *man/heatmap.io.Rd
 c7f334394ea7644c4edebd058de46c8e *man/hist3d.io.Rd
 1842e6b08181a43c0d2e77422a563806 *man/inverse.important.Rd
+cac5312b826bfcf34104af2734132ede *man/ioanalysis.Rd
 3adfdef224918d633bdc65fb9077392d *man/key.sector.Rd
 96fa9bb8bcb9a2a183036dc518aed261 *man/leontief.inv.Rd
 7609b93ce01ab529ae0af50a76854d29 *man/linkages.Rd
 26ba84d2871eb74d41c28ff4d70ef757 *man/locate.mismatch.Rd
 8bec962aae62dcd07baa7925e84a626b *man/lq.rd
 6c2c58ea252e781782605ab5013275d2 *man/mpm.Rd
-b063eafc20d29646ff2026a1ad7cf5a5 *man/multipliers.Rd
+b2554f9df3b8f53d8dce019c230731ea *man/multipliers.Rd
 7b4adb134e8dca824f5b5ab33b890154 *man/output.decomposition.Rd
 96c321af65ff77c0ecc056038f5121af *man/ras.Rd
 b1c2048b84f4e7594ce8702838724d4f *man/rsp.Rd

@@ -35,7 +35,7 @@ ras <- function(io, x1, u1, v1, tol, maxiter, type, verbose = FALSE){
     R <- matrix(r, ncol = n, nrow = n)
     A1 <- R * A
     # Even n
-    v <- t( t(x1) %*% A1 )
+    v <- t(A1 * t(matrix(x1,ncol = n, nrow = n)))%*%matrix(rep(1,n))
     # Preventing 0/0
     j <- which(v == 0)
     v[j] <- 1

@@ -1,6 +1,6 @@
 Package: ioanalysis
 Title: Input Output Analysis
-Version: 0.3.2
+Version: 0.3.3
 Authors@R: c(
   person("John", "Wade", email = "jjpwade2@illinois.edu", role = c("aut", "cre")),
   person("Ignacio", "Sarmiento-Barbieri", email = "srmntbr2@illinois.edu", role = c("aut"))) 
@@ -12,8 +12,8 @@ Depends: R (>= 3.4.0), ggplot2, plot3D, lpSolve, utils
 License: GPL (>= 2)
 URL: http://www.real.illinois.edu
 LazyData: true
-RoxygenNote: 7.0.2
+RoxygenNote: 7.1.0
 NeedsCompilation: no
-Packaged: 2020-06-07 21:58:51 UTC; JJPWade
+Packaged: 2020-07-06 16:00:01 UTC; johnj
 Repository: CRAN
-Date/Publication: 2020-06-08 04:40:02 UTC
+Date/Publication: 2020-07-06 17:00:06 UTC

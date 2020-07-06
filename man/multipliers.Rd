@@ -24,12 +24,12 @@ multipliers(io, ES, regions = "all", sectors = "all", multipliers, wage.row,
 
 \details{There are four different multipliers able to be calculated:
 
-(1) \code{output} - Output multipliers are calculated as the row sums of the Leontief matrix:
+(1) \code{output} - Output multipliers are calculated as the sum over rows from the Leontief matrix:
 \deqn{O_j = \sum_{i=1}^n l_{ij}  }
 where \eqn{l_{ij}} is the ith row and jth column element of the Leontief matrix.
 
-(2)\code{input} - Input multipliers are calculated as the row sums of the Ghoshian matrix:
-\deqn{I_j = \sum_{i=1}^n g_{ij}}
+(2)\code{input} - Input multipliers are calculated as the sum over columns from the Ghoshian matrix:
+\deqn{I_i = \sum_{j=1}^n g_{ij}}
 where \eqn{g_ij} is the ith row and jth column element of the Ghoshian matrix
 
 (3) \code{wage} - Income multipliers are calculated using value add due to employee compensation or wages. Multiple types of wages are supported. Wages are standardized and multiplied by the Leontief matrix:

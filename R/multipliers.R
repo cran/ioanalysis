@@ -82,9 +82,9 @@ multipliers <- function(io, ES, regions = "all", sectors = "all", multipliers, w
   ## input ##
   ###########
   if("input" %in% multipliers){
-    one <- matrix(rep(1, n), nrow = 1)
+    one <- matrix(rep(1, n))
     G <- io$G
-    input <- t(one %*% G)
+    input <- G %*% one
     for(r in 1:length(regions)){
       i <- which(RS_label[, 1] %in% regions[r])
       i <- intersect(i, location)
