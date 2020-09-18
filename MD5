@@ -1,13 +1,12 @@
-7405977f4de796f963da90ca21e33050 *DESCRIPTION
+96c246a8d6ae6d496765dcd62d854db3 *DESCRIPTION
 d7139d68e49f56192e5618c841453430 *NAMESPACE
 b50a58c0f82e7e616fec5816f6c9ff9b *R/agg.region.R
 2e28fcc9b6a646adf76d08aa5135735f *R/agg.sector.R
 3574639bd78ac22d2babcb44aa3c0d0c *R/as.inputoutput.R
 d88b2821036f569ec2c8a4b76d66e7cb *R/check.RS.R
-e32372d1679824372ddf90072968fde2 *R/disaggregate.R
 7e1fd48fc3f6e80068873b53065e91de *R/easy.select.R
 a5059ca73cc59890378f2c341e58aa27 *R/export.coef.R
-1bfeae734fc2527972aa8d32a475ceb6 *R/export.total.R
+e00efb283dd17834d6cfcfcad766477c *R/export.total.R
 97ec4d2d5dfcfa455706eed7f64b7bfb *R/extraction.R
 7767eecb19d9d46030ae4fc25b310f5d *R/f.influence.R
 1491589dbbcb9a920f98bbc3b3e86e29 *R/f.influence.total.R
@@ -17,7 +16,7 @@ ebf41721c4cd32a374cdaee1b00cb51a *R/ghosh.inv.R
 53c14b110e62a42634bff26e8073890f *R/heatmap.io.R
 0f14841daeb5549700efea0e752865de *R/hist3d.io.R
 cae5d7332d0e6b6b996d2e04167cb660 *R/import.coef.R
-b766daf3d3860b20d46e5943f372a390 *R/import.total.R
+a9a1881352b5c60e888551749f06a5d5 *R/import.total.R
 9b418f4ddd762e87f73945bda3f0f2ba *R/inverse.important.R
 2647b1fccd75359f50d5238cd36f4582 *R/key.sector.R
 7952ef0cad0cbaec37d64dbb56e13587 *R/leontief.inv.R
@@ -27,7 +26,7 @@ a628a56020b7d2d8ce66beb1a9856001 *R/lq.R
 38b8a3ba599f271296b7085aba5770b2 *R/mpm.R
 de1c9872b930dcd1d16fd02f1945c469 *R/multipliers.R
 7729d597e0dfbf14b1573b963becaf95 *R/output.decomposition.R
-39e1e7e26be7fbeabb2c2e0c63943514 *R/ras.R
+8cf3ca89836827d07ccab76f3abfbb51 *R/ras.R
 3d8bf5c0a1bcf6443e1e08e9bf799b3c *R/rsp.R
 90c544329f38456538c9efbc6bc513b8 *R/upstream.R
 e6b6f66d8f1a8f1596c1d7614fafe91b *R/vs.R
@@ -40,7 +39,6 @@ e6b6f66d8f1a8f1596c1d7614fafe91b *R/vs.R
 805433a347b21f18e36708cbdb2def0b *man/agg.sector.Rd
 6d782b0d5abc71332649ea666866d557 *man/as.inputoutput.Rd
 94f6641d236875ad49a824763d31bbff *man/check.RS.Rd
-cce31440b10d5772fe381a96f58420da *man/disaggregate.Rd
 182ec631f39658818936d9a0c5fdde0b *man/easy.select.Rd
 23d751fe50d38beacbd9ecf35fec9bb5 *man/export.coef.Rd
 a88d58ee53dff77e522044583cd7cd4a *man/export.total.Rd
@@ -61,7 +59,7 @@ cac5312b826bfcf34104af2734132ede *man/ioanalysis.Rd
 6c2c58ea252e781782605ab5013275d2 *man/mpm.Rd
 b2554f9df3b8f53d8dce019c230731ea *man/multipliers.Rd
 7b4adb134e8dca824f5b5ab33b890154 *man/output.decomposition.Rd
-96c321af65ff77c0ecc056038f5121af *man/ras.Rd
+7f14ddbdaa7ce8a5019aaf2542d7f23a *man/ras.Rd
 b1c2048b84f4e7594ce8702838724d4f *man/rsp.Rd
 10a0c62f38e19ffcbeb08be19b2040ce *man/toy.ES.rd
 94185fb762070cc6c8528b13bfed22ca *man/toy.FullIOTable.Rd

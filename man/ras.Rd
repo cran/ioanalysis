@@ -7,7 +7,7 @@ ras Updating Proejcting
 \description{
 Uses the ras technique to update the matrix of technical input coefficients \code{A}. You must have knowledge of or forecasts for the following three objects: (1) row sums \code{u1} of \code{A}, (2) column sums \code{v1} of \code{A}, and (3) total production \code{x1}.}
 \usage{
-ras(io, x1, u1, v1, tol, maxiter, type, verbose = FALSE)
+ras(io, x1, u1, v1, tol, maxiter, verbose = FALSE)
 }
 
 \arguments{
@@ -15,9 +15,8 @@ ras(io, x1, u1, v1, tol, maxiter, type, verbose = FALSE)
   \item{x1}{Vector. The forecast for future total production of each region-sector combination, matching the \code{X} object in \code{io}}
   \item{u1}{Vector. The forecast for future row sums of the matrix of technical input coefficients in \code{A} from \code{io}}
   \item{v1}{Vector. The forecast for future column sums of the matrix of technical input coefficients in \code{A} from \code{io}}
-  \item{tol}{Numeric. The tolerance for convergence. Default: 0.001}
+  \item{tol}{Numeric. The tolerance for convergence. Default: \code{1e-06}}
   \item{maxiter}{Numeric. The maximum number of iterations to try for convergence. Defualt: 10000}
-  \item{type}{Character. The type of norm to use for convergence. See \code{?norm}. Default: "o"}
   \item{verbose}{Logical. If \code{TRUE} will print the iteration and norm at each step. This is useful if the dataset is large. Deafult: \code{FALSE}}
 }
 

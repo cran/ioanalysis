@@ -10,7 +10,7 @@ export.total <- function(io){
   }
   regions <- unique(RS_label[, 1])
   # Getting to work
-  export <- rep(NA, dim(Z)[1])
+  export <- rep(0, dim(Z)[1])
   exports <- export
   if(!'E' %in% names(io) & length(regions) == 1) stop("There is only one region and no exports. Check io$E")
   check <- 0

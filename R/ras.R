@@ -1,4 +1,4 @@
-ras <- function(io, x1, u1, v1, tol, maxiter, type, verbose = FALSE){
+ras <- function(io, x1, u1, v1, tol, maxiter, verbose = FALSE){
   # Preliminary checks
   if("InputOutput" %in% class(io)){
     A <- io$A
@@ -11,13 +11,10 @@ ras <- function(io, x1, u1, v1, tol, maxiter, type, verbose = FALSE){
   if(length(u1) != n) stop("u1 must be same length as the dimension of A")
   if(length(v1) != n) stop("v1 must be same length as the dimension of A")
   if(missing(tol)){
-    tol <- 0.001
+    tol <- 1e-06
   }
   if(missing(maxiter)){
     maxiter <- 10000
-  }
-  if(missing(type)){
-    type <- "o"
   }
   x1 <- matrix(x1)
   u1 <- matrix(u1)
@@ -43,19 +40,18 @@ ras <- function(io, x1, u1, v1, tol, maxiter, type, verbose = FALSE){
     S <- matrix(s, ncol = n, nrow = n, byrow = TRUE)
     A2 <- A1 * S
     # Checking convergence
-    check <- A2 - A
-    closeness <- norm(check, type = type)
+    rmse <- sqrt(  sum((A2 - A)^2)/(n^2)  )
     if(verbose == TRUE){
-      cat(paste("  Iteration:", i, "  norm:", closeness, "\n"))
+      cat(paste("  Iteration:", i, "  RMSE:", rmse, "\n"))
     }
-    if(closeness < tol) break
+    if(rmse < tol) break
     A <- A2
   }
   if(i == maxiter){
     warning("\n\n  No convergence. Maximum Number of iterations reached. Consider increasing the number of iterations.")
   }
   if(verbose == FALSE){
-    cat(paste("\n\n  Number of iterations:", i, "\n\n"))
+    cat(paste("\n\n  Number of iterations:", i, 'RMSE:', rmse,  "\n\n"))
   }
   A2
 }
